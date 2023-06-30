@@ -4,11 +4,17 @@ import Head from 'next/head';
 import PageLoader from '../src/components/PageLoader/PageLoader';
 import useTranslator from '../src/hooks/useTranslator';
 import TranslatorContext from '../src/contexts/TranslatorContext';
+import 'assets/scss/style.scss';
 
 const App = (props: AppProps) => {
   const { Component } = props;
 
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
+  const [theme, setTheme] = React.useState<string>('dark');
+
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  }, [theme]);
 
   React.useEffect(() => {
     setTimeout(() => {
