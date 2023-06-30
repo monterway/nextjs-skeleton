@@ -5,7 +5,8 @@
     "build:watch": "tsc --watch",
     "deploy": "firebase deploy",
     "dev": "firebase emulators:start",
-    "lint": "eslint --ext .js,.ts ."
+    "lint": "eslint --ext .js,.ts .",
+    "pretty": "prettier --write ."
   },
   "engines": {
     "node": "16"

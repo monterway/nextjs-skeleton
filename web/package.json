@@ -7,7 +7,8 @@
     "lint": "next lint",
     "build": "next build",
     "start": "next start",
-    "sass": "sass --no-source-map src/assets/scss:public/css"
+    "sass": "sass --no-source-map src/assets/scss:public/css",
+    "pretty": "prettier --write ."
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
