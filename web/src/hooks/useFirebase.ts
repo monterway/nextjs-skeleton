@@ -1,10 +1,6 @@
-export interface UseFirebaseProps {
+export interface UseFirebaseProps {}
 
-}
-
-export interface UseFirebaseType {
-
-}
+export interface UseFirebaseType {}
 
 const useFirebase = (props: UseFirebaseProps): UseFirebaseType => {
   return {};

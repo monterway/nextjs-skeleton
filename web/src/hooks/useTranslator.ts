@@ -1,6 +1,6 @@
-import React from "react";
-import {useRouter} from "next/router";
-import {flatten} from "flat";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { flatten } from 'flat';
 
 export interface TranslationType {
   [translationId: string]: string;
@@ -17,9 +17,12 @@ export interface TranslatorProps {
 
 export interface TranslatorType {
   locale: string;
-  translate: (translationId: string, values?: {
-    [placeholderId: string]: string;
-  }) => string;
+  translate: (
+    translationId: string,
+    values?: {
+      [placeholderId: string]: string;
+    }
+  ) => string;
 }
 
 export interface UseTranslatorProps {
@@ -28,14 +31,11 @@ export interface UseTranslatorProps {
 
 export interface UseTranslatorType {
   isLoaded: boolean;
-  translator: TranslatorType|null;
+  translator: TranslatorType | null;
 }
 
 const Translator = (props: TranslatorProps): TranslatorType => {
-  const {
-    locale,
-    translations,
-  } = props;
+  const { locale, translations } = props;
 
   return {
     locale,
@@ -44,7 +44,9 @@ const Translator = (props: TranslatorProps): TranslatorType => {
       const flattedTranslations = flatten.flatten(translations) as {
         [key: string]: string;
       };
-      const message = Object.keys(flattedTranslations).includes(translationIdWithLocale) ? flattedTranslations[translationIdWithLocale] as string : translationIdWithLocale;
+      const message = Object.keys(flattedTranslations).includes(translationIdWithLocale)
+        ? (flattedTranslations[translationIdWithLocale] as string)
+        : translationIdWithLocale;
       if (Object.keys(values).length > 0) {
         let parsedMessage = message;
         for (const valueKey in values) {
@@ -53,7 +55,7 @@ const Translator = (props: TranslatorProps): TranslatorType => {
         return parsedMessage;
       }
       return message;
-    },
+    }
   };
 };
 
@@ -61,25 +63,23 @@ const useTranslator = (props: UseTranslatorProps): UseTranslatorType => {
   const { translations } = props;
   const { locale } = useRouter();
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
-  const [translator, setTranslator] = React.useState<TranslatorType|null>(null);
+  const [translator, setTranslator] = React.useState<TranslatorType | null>(null);
 
   React.useEffect(() => {
     setIsLoaded(false);
     if (locale) {
       const translator = Translator({
         locale,
-        translations,
+        translations
       });
       setTranslator(translator);
     }
     setIsLoaded(true);
-  }, [
-    locale,
-  ]);
+  }, [locale]);
 
   return {
     isLoaded,
-    translator,
+    translator
   };
 };
 
