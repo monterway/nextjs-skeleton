@@ -25,3 +25,7 @@
 ### Locales
 1. Define available locales and default locale:
    - `web/next.config.js`
+
+## Fetch skeleton
+1. Fetch the skeleton repository: `git fetch --all`
+2. Merge updates into current project: `git merge template/master --allow-unrelated-histories`
