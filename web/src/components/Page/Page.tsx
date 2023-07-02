@@ -1,18 +1,16 @@
-import Header from "../Header/Header";
+import Header from '../Header/Header';
 
 export interface PageProps {
-  children: JSX.Element|JSX.Element[];
+  children: JSX.Element | JSX.Element[];
 }
 
 const Page = (props: PageProps): JSX.Element => {
-  const {
-    children,
-  } = props;
+  const { children } = props;
 
   return (
     <div>
-      <Header/>
-      { children }
+      <Header />
+      {children}
       <h1>Footer</h1>
     </div>
   );

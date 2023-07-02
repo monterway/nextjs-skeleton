@@ -1,5 +1,5 @@
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import FirebaseAuth from "../../services/Firebase/FirebaseAuth";
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import FirebaseAuth from '../../services/Firebase/FirebaseAuth';
 // import {UserType} from "../../../../types/UserType";
 // import {httpsCallable} from "@firebase/functions";
 // import FirebaseFunctions from "../../services/Firebase/FirebaseFunctions";
@@ -33,10 +33,7 @@ const GoogleSignInButton = (props: GoogleSignInButtonProps): JSX.Element => {
   };
 
   return (
-    <button
-      onClick={onClick}
-      className={`btn btn-primary ${className ?? ''}`}
-    >
+    <button onClick={onClick} className={`btn btn-primary ${className ?? ''}`}>
       Sign up
     </button>
   );

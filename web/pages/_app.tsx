@@ -5,16 +5,16 @@ import PageLoader from '../src/components/PageLoader/PageLoader';
 import useTranslator from '../src/hooks/useTranslator';
 import TranslatorContext from '../src/contexts/TranslatorContext';
 import 'assets/scss/style.scss';
-import {UserType} from "../../types/UserType";
-import {onAuthStateChanged} from "@firebase/auth";
-import FirebaseAuth from "../src/services/Firebase/FirebaseAuth";
+import { UserType } from '../../types/UserType';
+import { onAuthStateChanged } from '@firebase/auth';
+import FirebaseAuth from '../src/services/Firebase/FirebaseAuth';
 
 const App = (props: AppProps) => {
   const { Component } = props;
 
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<string>('dark');
-  const [user, setUser] = React.useState<UserType|null>(null);
+  const [user, setUser] = React.useState<UserType | null>(null);
 
   React.useEffect(() => {
     document.documentElement.setAttribute('data-bs-theme', theme);
@@ -24,7 +24,7 @@ const App = (props: AppProps) => {
     const subscriber = onAuthStateChanged(FirebaseAuth, (user) => {
       if (user && user.email) {
         setUser({
-          email: user.email,
+          email: user.email
         });
       }
     });
