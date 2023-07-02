@@ -1,7 +1,7 @@
 import Header from "../Header/Header";
 
 export interface PageProps {
-  children: JSX.Element;
+  children: JSX.Element|JSX.Element[];
 }
 
 const Page = (props: PageProps): JSX.Element => {

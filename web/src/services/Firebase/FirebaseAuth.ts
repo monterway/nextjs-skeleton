@@ -5,7 +5,7 @@ import firebaseConfig from '../../../../firebase/firebase.json';
 const FirebaseAuth = getAuth(FirebaseApp);
 
 if (process.env.NODE_ENV === 'development') {
-  connectAuthEmulator(FirebaseAuth, `http://localhost:${firebaseConfig.emulators.auth.port}`);
+  connectAuthEmulator(FirebaseAuth, `http://127.0.0.1:${firebaseConfig.emulators.auth.port}`);
 }
 
 export default FirebaseAuth;
