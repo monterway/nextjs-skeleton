@@ -27,5 +27,6 @@
    - `web/next.config.js`
 
 ## Fetch skeleton
-1. Fetch the skeleton repository: `git fetch --all`
-2. Merge updates into current project: `git merge template/master --allow-unrelated-histories`
+1. Define skeleton repository: `git remote add template git@github.com:monterway/nextjs-skeleton.git`
+2. Fetch the skeleton repository: `git fetch --all`
+3. Merge updates into current project: `git merge template/master --allow-unrelated-histories`
