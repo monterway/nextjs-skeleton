@@ -1,5 +1,5 @@
 {
-  "name": "core-lib",
+  "name": "nextjs-skeleton",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
