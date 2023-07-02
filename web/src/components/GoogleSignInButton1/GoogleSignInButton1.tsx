@@ -4,11 +4,11 @@ import FirebaseAuth from '../../services/Firebase/FirebaseAuth';
 // import {httpsCallable} from "@firebase/functions";
 // import FirebaseFunctions from "../../services/Firebase/FirebaseFunctions";
 
-export interface GoogleSignInButtonProps {
+export interface GoogleSignInButton1Props {
   className?: string;
 }
 
-const GoogleSignInButton = (props: GoogleSignInButtonProps): JSX.Element => {
+const GoogleSignInButton1 = (props: GoogleSignInButton1Props): JSX.Element => {
   const { className = '' } = props;
 
   const onClick = (): void => {
@@ -39,4 +39,4 @@ const GoogleSignInButton = (props: GoogleSignInButtonProps): JSX.Element => {
   );
 };
 
-export default GoogleSignInButton;
+export default GoogleSignInButton1;
