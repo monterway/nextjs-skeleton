@@ -1,4 +1,5 @@
-import Header from '../Header/Header';
+import Header1 from '../Header1/Header1';
+import Footer1 from '../Footer1/Footer1';
 
 export interface PageProps {
   children: JSX.Element | JSX.Element[];
@@ -9,9 +10,9 @@ const Page = (props: PageProps): JSX.Element => {
 
   return (
     <div>
-      <Header />
+      <Header1 title={''} buttons={[]} />
       {children}
-      <h1>Footer</h1>
+      <Footer1 title={''} buttons={[]} />
     </div>
   );
 };
