@@ -8,6 +8,7 @@ import 'assets/scss/style.scss';
 import { UserType } from '../../types/UserType';
 import { onAuthStateChanged } from '@firebase/auth';
 import FirebaseAuth from '../src/services/Firebase/FirebaseAuth';
+import UserContext from '../src/contexts/UserContext';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -53,12 +54,14 @@ const App = (props: AppProps) => {
   return (
     <Fragment>
       <TranslatorContext.Provider value={translator}>
-        <Head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        </Head>
-        {isLoading ? <PageLoader /> : null}
-        <Component />
+        <UserContext.Provider value={user}>
+          <Head>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
+          {isLoading ? <PageLoader /> : null}
+          <Component />
+        </UserContext.Provider>
       </TranslatorContext.Provider>
     </Fragment>
   );
