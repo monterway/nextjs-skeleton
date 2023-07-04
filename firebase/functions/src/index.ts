@@ -4,12 +4,14 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import { UserType } from '../../../types/UserType';
+import app from "./app/app";
 
 admin.initializeApp();
 
-const api = express();
+let api = express();
 const apiCors = cors({ origin: true });
 const apiCookieParser = cookieParser();
+
 const auth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   let idToken: string | null = null;
 
@@ -53,5 +55,7 @@ api.post('/me', (req, res) => {
     })
   );
 });
+
+api = app(api);
 
 exports.api = functions.https.onRequest(api);
