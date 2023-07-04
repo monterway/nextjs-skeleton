@@ -68,7 +68,7 @@ const FormWidget = (props: FormWidgetProps): JSX.Element|null => {
             <div key={step.id} className={`${step.id !== currentStepId ? 'd-none' : ''} ${step.className ? step.className : ''}`}>
               { step.content }
               <div className="d-flex justify-content-between">
-                <button className="btn btn-primary" onClick={() => {
+                <button className={`btn btn-primary ${!previousAndNextStepIds.previousStepId ? 'invisible' : ''}`} onClick={() => {
                   onPrevious(step.id, previousAndNextStepIds.previousStepId);
                 }}>Previous</button>
                 <button className="btn btn-primary" onClick={() => {
