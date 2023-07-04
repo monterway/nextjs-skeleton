@@ -11,10 +11,13 @@ export interface FormWidgetProps {
   onNextStep: (goNext: () => void, currentStepId: string, nextStepId: string|null) => void;
   onPreviousStep: (goPrevious: () => void, currentStepId: string, previousStepId: string|null) => void;
   className?: string;
+  previousButtonTitle?: string;
+  nextButtonTitle?: string;
+  submitButtonTitle?: string;
 }
 
 const FormWidget = (props: FormWidgetProps): JSX.Element|null => {
-  const { startStepId, steps, onSubmit, onNextStep, onPreviousStep, className = '' } = props;
+  const { startStepId, steps, onSubmit, onNextStep, onPreviousStep, className = '', previousButtonTitle = 'Previous', nextButtonTitle = 'Next', submitButtonTitle = 'Submit' } = props;
   const [currentStepId, setCurrentStepId] = React.useState<string>(startStepId);
   const [previousStepId, setPreviousStepId] = React.useState<string|null>(null);
   const [nextStepId, setNextStepId] = React.useState<string|null>(null);
@@ -70,10 +73,10 @@ const FormWidget = (props: FormWidgetProps): JSX.Element|null => {
               <div className="d-flex justify-content-between">
                 <button className={`btn btn-primary ${!previousAndNextStepIds.previousStepId ? 'invisible' : ''}`} onClick={() => {
                   onPrevious(step.id, previousAndNextStepIds.previousStepId);
-                }}>Previous</button>
+                }}>{ previousButtonTitle }</button>
                 <button className="btn btn-primary" onClick={() => {
                   onNext(step.id, previousAndNextStepIds.nextStepId);
-                }}>Next</button>
+                }}>{ previousAndNextStepIds.nextStepId ? nextButtonTitle : submitButtonTitle }</button>
               </div>
             </div>
           );
