@@ -1,61 +1,23 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
+import * as functions from 'firebase-functions';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
-import { UserType } from '../../../types/UserType';
-import app from "./app/app";
+import AuthModule from "./core/modules/Auth/Auth";
+import AuthRoutes from "./core/routes/Auth/Auth";
+import ApiRoutes from "./api/routes/Api/Api";
 
 admin.initializeApp();
 
-let api = express();
-const apiCors = cors({ origin: true });
-const apiCookieParser = cookieParser();
+let app = express();
+const appCors = cors({ origin: true });
+const appCookieParser = cookieParser();
 
-const auth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  let idToken: string | null = null;
+app.use(appCors);
+app.use(appCookieParser);
+app.use(AuthModule().setUserInRequest);
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-    idToken = req.headers.authorization.split('Bearer ')[1];
-  } else if (req.cookies && req.cookies.__session) {
-    idToken = req.cookies.__session;
-  }
+app.use('/auth', AuthRoutes);
+app.use('/api', ApiRoutes);
 
-  if (idToken !== null) {
-    try {
-      req.user = await admin.auth().verifyIdToken(idToken);
-    } catch (e) {
-      next();
-      return;
-    }
-  } else {
-    req.user = null;
-  }
-
-  next();
-  return;
-};
-
-api.use(apiCors);
-api.use(apiCookieParser);
-api.use(auth);
-
-api.post('/me', (req, res) => {
-  let user: UserType | null = null;
-
-  if (req.user && req.user.email) {
-    user = {
-      email: req.user.email
-    };
-  }
-
-  res.send(
-    JSON.stringify({
-      data: user
-    })
-  );
-});
-
-api = app(api);
-
-exports.api = functions.https.onRequest(api);
+exports.app = functions.https.onRequest(app);
