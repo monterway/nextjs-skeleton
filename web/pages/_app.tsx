@@ -12,6 +12,9 @@ import UserContext from '../src/contexts/UserContext';
 import FirebaseDb from '../src/services/Firebase/FirebaseDb';
 import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
+import {ModalType} from "../src/types/ModalType";
+import ModalContext  from "../src/contexts/ModalContext";
+import Modal1 from "../src/components/Modal1/Modal1";
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -19,6 +22,7 @@ const App = (props: AppProps) => {
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<string>('dark');
   const [user, setUser] = React.useState<UserType | null>(null);
+  const [modal, setModal] = React.useState<ModalType | null>(null);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
   const [translations, setTranslations] = React.useState<TranslationsType>({
     en: {
@@ -80,12 +84,18 @@ const App = (props: AppProps) => {
     <Fragment>
       <TranslatorContext.Provider value={translator}>
         <UserContext.Provider value={user}>
-          <Head>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          </Head>
-          {isLoading ? <PageLoader /> : null}
-          <Component />
+          <ModalContext.Provider value={{
+            value: modal,
+            set: setModal,
+          }}>
+            <Head>
+              <meta charSet="utf-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            </Head>
+            {isLoading ? <PageLoader /> : null}
+            <Modal1 value={modal} set={setModal} />
+            <Component />
+          </ModalContext.Provider>
         </UserContext.Provider>
       </TranslatorContext.Provider>
     </Fragment>
