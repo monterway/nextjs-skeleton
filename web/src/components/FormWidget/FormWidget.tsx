@@ -7,7 +7,7 @@ export interface FormWidgetProps {
     content: JSX.Element | JSX.Element[];
     className?: string;
   }[];
-  onSubmit: () => void;
+  onSubmit: (currentStepId: string) => void;
   onNextStep: (goNext: () => void, currentStepId: string, nextStepId: string | null) => void;
   onPreviousStep: (goPrevious: () => void, currentStepId: string, previousStepId: string | null) => void;
   className?: string;
@@ -70,7 +70,7 @@ const FormWidget = (props: FormWidgetProps): JSX.Element | null => {
         nextStepId
       );
     } else {
-      onSubmit();
+      onSubmit(currentStepId);
     }
   };
   const onPrevious = (currentStepId: string, previousStepId: string | null) => {
