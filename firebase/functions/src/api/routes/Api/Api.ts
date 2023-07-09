@@ -1,6 +1,6 @@
 import * as express from 'express';
-import RequestHandler from "../../../core/modules/RequestHandler/RequestHandler";
-import {ValidationType} from "../../../../../../types/ValidationType";
+import RequestHandler from '../../../core/modules/RequestHandler/RequestHandler';
+import { ValidationType } from '../../../../../../types/ValidationType';
 
 const Api = express.Router();
 
@@ -16,7 +16,7 @@ Api.all('/test', (req, res) => {
   if (!('test' in data)) {
     validations.push({
       field: 'test',
-      error: 'missing',
+      error: 'missing'
     });
   }
 
@@ -26,7 +26,7 @@ Api.all('/test', (req, res) => {
   }
 
   RequestHandler().sendSuccessfulResponse(res, {
-    test: data.test,
+    test: data.test
   });
   return;
 });

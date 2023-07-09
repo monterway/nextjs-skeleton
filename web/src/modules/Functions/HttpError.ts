@@ -1,4 +1,4 @@
-import { ResponseType } from "../../../../types/ResponseType";
+import { ResponseType } from '../../../../types/ResponseType';
 
 export class HttpError extends Error {
   response: ResponseType;

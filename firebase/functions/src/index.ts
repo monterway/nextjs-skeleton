@@ -3,9 +3,9 @@ import * as express from 'express';
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
-import AuthModule from "./core/modules/Auth/Auth";
-import AuthRoutes from "./core/routes/Auth/Auth";
-import ApiRoutes from "./api/routes/Api/Api";
+import AuthModule from './core/modules/Auth/Auth';
+import AuthRoutes from './core/routes/Auth/Auth';
+import ApiRoutes from './api/routes/Api/Api';
 
 admin.initializeApp();
 

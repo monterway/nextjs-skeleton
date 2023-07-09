@@ -1,6 +1,6 @@
 export interface ModalType {
   title: string;
-  description: string|string[];
+  description: string | string[];
   hasClose?: boolean;
   primary?: {
     title: string;

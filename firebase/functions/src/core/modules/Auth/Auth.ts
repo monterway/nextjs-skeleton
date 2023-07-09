@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as admin from 'firebase-admin';
 
 export interface AuthType {
-  setUserInRequest: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>,
+  setUserInRequest: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>;
 }
 
 const Auth = (): AuthType => ({
@@ -28,7 +28,7 @@ const Auth = (): AuthType => ({
 
     next();
     return;
-  },
+  }
 });
 
 export default Auth;

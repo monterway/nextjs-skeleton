@@ -12,9 +12,9 @@ import UserContext from '../src/contexts/UserContext';
 import FirebaseDb from '../src/services/Firebase/FirebaseDb';
 import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
-import {ModalType} from "../src/types/ModalType";
-import ModalContext  from "../src/contexts/ModalContext";
-import Modal1 from "../src/components/Modal1/Modal1";
+import { ModalType } from '../src/types/ModalType';
+import ModalContext from '../src/contexts/ModalContext';
+import Modal1 from '../src/components/Modal1/Modal1';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -84,10 +84,12 @@ const App = (props: AppProps) => {
     <Fragment>
       <TranslatorContext.Provider value={translator}>
         <UserContext.Provider value={user}>
-          <ModalContext.Provider value={{
-            value: modal,
-            set: setModal,
-          }}>
+          <ModalContext.Provider
+            value={{
+              value: modal,
+              set: setModal
+            }}
+          >
             <Head>
               <meta charSet="utf-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
