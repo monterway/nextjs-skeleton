@@ -1,3 +1,3 @@
 export interface FormDataType {
-  [key: string]: string;
+  [key: string]: string|number;
 }
