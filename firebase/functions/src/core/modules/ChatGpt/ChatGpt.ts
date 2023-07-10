@@ -1,19 +1,5 @@
 import axios, { AxiosError } from 'axios';
 
-export enum ChatGpt3Engine {
-  Davinci = 'davinci',
-  Curie = 'curie',
-  Babbage = 'babbage',
-  Ada = 'ada'
-}
-
-export enum ChatGpt3MaxTokens {
-  'davinci' = 4096,
-  'curie' = 4096,
-  'babbage' = 4096,
-  'ada' = 2048
-}
-
 export enum ChatGpt3RandomnessIndex {
   'low' = 0,
   'low-medium' = 0.25,
@@ -45,8 +31,7 @@ export interface ChatGptProps {
 }
 
 export interface ChatGptType {
-  chooseEngine: (question: ChatGptQuestion) => ChatGpt3Engine;
-  ask: (question: ChatGptQuestion, randomness: ChatGptRandomness) => Promise<string>;
+  ask: (question: ChatGptQuestion, systemContext: ChatGptQuestion, randomness: ChatGptRandomness) => Promise<string>;
 }
 
 const ChatGpt = (props: ChatGptProps): ChatGptType => {
@@ -59,42 +44,24 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
     }
   });
 
-  const chooseEngine = (question: ChatGptQuestion): ChatGpt3Engine => {
-    const questionTokens = question.split(' ').length;
-    if (questionTokens > 4096) {
-      throw new ChatGptError('TOO_MANY_CHARACTERS');
-    }
-
-    const complexKeywords = ['explain', 'describe', 'why', 'how', 'synthesize', 'create', 'imagine', 'predict'];
-    let complexityScore = 0;
-    for (let keyword of complexKeywords) {
-      if (question.toLowerCase().includes(keyword)) {
-        complexityScore++;
-      }
-    }
-
-    if (questionTokens <= 10 && complexityScore === 0) {
-      return ChatGpt3Engine.Ada;
-    } else if (questionTokens > 10 && questionTokens <= 20 && complexityScore <= 1) {
-      return ChatGpt3Engine.Babbage;
-    } else if ((questionTokens > 20 && questionTokens <= 50) || complexityScore > 1) {
-      return ChatGpt3Engine.Curie;
-    } else {
-      return ChatGpt3Engine.Davinci;
-    }
-  };
-
-  const ask = async (question: ChatGptQuestion, randomness: ChatGptRandomness = 'medium'): Promise<string> => {
-    const engine = chooseEngine(question);
-
+  const ask = async (question: ChatGptQuestion, systemContext: ChatGptQuestion, randomness: ChatGptRandomness = 'medium'): Promise<string> => {
     try {
-      const response = await client.post(`/engines/${engine}/completions`, {
-        prompt: question,
-        max_tokens: ChatGpt3MaxTokens[engine],
+      const response = await client.post(`/chat/completions`, {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: systemContext,
+          },
+          {
+            role: 'user',
+            content: question,
+          },
+        ],
         temperature: ChatGpt3RandomnessIndex[randomness]
       });
 
-      return response.data.choices[0].text;
+      return response.data.choices[0].message.content;
     } catch (e) {
       if (e instanceof AxiosError) {
         if (e.response) {
@@ -112,7 +79,6 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
   };
 
   return {
-    chooseEngine,
     ask
   };
 };
