@@ -44,19 +44,23 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
     }
   });
 
-  const ask = async (question: ChatGptQuestion, systemContext: ChatGptQuestion, randomness: ChatGptRandomness = 'medium'): Promise<string> => {
+  const ask = async (
+    question: ChatGptQuestion,
+    systemContext: ChatGptQuestion,
+    randomness: ChatGptRandomness = 'medium'
+  ): Promise<string> => {
     try {
       const response = await client.post(`/chat/completions`, {
         model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
-            content: systemContext,
+            content: systemContext
           },
           {
             role: 'user',
-            content: question,
-          },
+            content: question
+          }
         ],
         temperature: ChatGpt3RandomnessIndex[randomness]
       });
