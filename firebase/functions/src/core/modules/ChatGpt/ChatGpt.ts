@@ -87,7 +87,7 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
 
     try {
       const response = await client.post(`/engines/${engine}/completions`, {
-        prompt: prompt,
+        prompt: question,
         max_tokens: ChatGpt3MaxTokens[engine],
         temperature: ChatGpt3RandomnessIndex[randomness],
       });
