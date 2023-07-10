@@ -1,17 +1,17 @@
-import axios, {AxiosError} from "axios";
+import axios, { AxiosError } from 'axios';
 
 export enum ChatGpt3Engine {
   Davinci = 'davinci',
   Curie = 'curie',
   Babbage = 'babbage',
-  Ada = 'ada',
+  Ada = 'ada'
 }
 
 export enum ChatGpt3MaxTokens {
   'davinci' = 4096,
   'curie' = 4096,
   'babbage' = 4096,
-  'ada' = 2048,
+  'ada' = 2048
 }
 
 export enum ChatGpt3RandomnessIndex {
@@ -19,14 +19,14 @@ export enum ChatGpt3RandomnessIndex {
   'low-medium' = 0.25,
   'medium' = 0.5,
   'medium-high' = 0.75,
-  'high' = 1,
+  'high' = 1
 }
 
-export type ChatGptErrorCode = 'INVALID_REQUEST'|'TOO_MANY_CHARACTERS'|'UNKNOWN';
+export type ChatGptErrorCode = 'INVALID_REQUEST' | 'TOO_MANY_CHARACTERS' | 'UNKNOWN';
 
 export type ChatGptQuestion = string;
 
-export type ChatGptRandomness = 'low'|'low-medium'|'medium'|'medium-high'|'high';
+export type ChatGptRandomness = 'low' | 'low-medium' | 'medium' | 'medium-high' | 'high';
 
 export class ChatGptError extends Error {
   code: ChatGptErrorCode;
@@ -40,8 +40,8 @@ export class ChatGptError extends Error {
 }
 
 export interface ChatGptProps {
-  apiKey: string,
-  version: 'v1',
+  apiKey: string;
+  version: 'v1';
 }
 
 export interface ChatGptType {
@@ -55,8 +55,8 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
   const client = axios.create({
     baseURL: `https://api.openai.com/${version}`,
     headers: {
-      Authorization: 'Bearer ' + apiKey,
-    },
+      Authorization: 'Bearer ' + apiKey
+    }
   });
 
   const chooseEngine = (question: ChatGptQuestion): ChatGpt3Engine => {
@@ -91,24 +91,21 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
       const response = await client.post(`/engines/${engine}/completions`, {
         prompt: question,
         max_tokens: ChatGpt3MaxTokens[engine],
-        temperature: ChatGpt3RandomnessIndex[randomness],
+        temperature: ChatGpt3RandomnessIndex[randomness]
       });
 
       return response.data.choices[0].text;
-    }
-    catch (e) {
+    } catch (e) {
       if (e instanceof AxiosError) {
         if (e.response) {
           const data = e.response.data.error;
           // IF NOT EXISTING CODE IS RETURNED BY ChatGPT add it to the ChatGptErrorCode type
           const code = data.type.replace('_error', '').toUpperCase() as ChatGptErrorCode;
           throw new ChatGptError(code, data);
-        }
-        else {
+        } else {
           throw new ChatGptError('UNKNOWN');
         }
-      }
-      else {
+      } else {
         throw new ChatGptError('UNKNOWN');
       }
     }
@@ -116,7 +113,7 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
 
   return {
     chooseEngine,
-    ask,
+    ask
   };
 };
 

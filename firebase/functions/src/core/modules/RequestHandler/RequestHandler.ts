@@ -39,12 +39,12 @@ const RequestHandler = (): RequestHandlerType => ({
   sendUnknownResponse: (res, data) => {
     const response: ResponseType = {
       status: 'UNKNOWN',
-      data,
+      data
     };
     res.send({
       data: response
     });
-  },
+  }
 });
 
 export default RequestHandler;
