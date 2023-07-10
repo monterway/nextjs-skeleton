@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export enum ChatGpt3Engine {
   Davinci = 'davinci',
@@ -22,7 +22,7 @@ export enum ChatGpt3RandomnessIndex {
   'high' = 1,
 }
 
-export type ChatGptErrorCode = 'TOO_MANY_CHARACTERS'|'UNKNOWN';
+export type ChatGptErrorCode = 'INVALID_REQUEST'|'TOO_MANY_CHARACTERS'|'UNKNOWN';
 
 export type ChatGptQuestion = string;
 
@@ -30,10 +30,12 @@ export type ChatGptRandomness = 'low'|'low-medium'|'medium'|'medium-high'|'high'
 
 export class ChatGptError extends Error {
   code: ChatGptErrorCode;
+  data: any;
 
-  constructor(code: ChatGptErrorCode) {
+  constructor(code: ChatGptErrorCode, data: any = null) {
     super(code);
     this.code = code;
+    this.data = data;
   }
 }
 
@@ -95,8 +97,20 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
       return response.data.choices[0].text;
     }
     catch (e) {
-      // TODO Implement logic for understanding the error
-      throw new ChatGptError('UNKNOWN');
+      if (e instanceof AxiosError) {
+        if (e.response) {
+          const data = e.response.data.error;
+          // IF NOT EXISTING CODE IS RETURNED BY ChatGPT add it to the ChatGptErrorCode type
+          const code = data.type.replace('_error', '').toUpperCase() as ChatGptErrorCode;
+          throw new ChatGptError(code, data);
+        }
+        else {
+          throw new ChatGptError('UNKNOWN');
+        }
+      }
+      else {
+        throw new ChatGptError('UNKNOWN');
+      }
     }
   };
 
