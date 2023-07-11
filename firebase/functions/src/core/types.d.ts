@@ -1,9 +1,9 @@
-import * as admin from 'firebase-admin';
+import {UserType} from "../../../../types/UserType";
 
 declare global {
   namespace Express {
     export interface Request {
-      user: admin.auth.DecodedIdToken | null;
+      user: UserType | null;
     }
   }
 }

@@ -17,7 +17,15 @@ const Auth = (): AuthType => ({
 
     if (idToken !== null) {
       try {
-        req.user = await admin.auth().verifyIdToken(idToken);
+        const user = await admin.auth().verifyIdToken(idToken);
+        if (user.email) {
+          req.user = {
+            email: user.email,
+          };
+        }
+        else {
+          req.user = null;
+        }
       } catch (e) {
         next();
         return;
