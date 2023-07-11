@@ -20,10 +20,9 @@ const Auth = (): AuthType => ({
         const user = await admin.auth().verifyIdToken(idToken);
         if (user.email) {
           req.user = {
-            email: user.email,
+            email: user.email
           };
-        }
-        else {
+        } else {
           req.user = null;
         }
       } catch (e) {
