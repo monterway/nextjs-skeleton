@@ -6,6 +6,7 @@ export interface RequestHandlerType {
   sendSuccessfulResponse: (res: express.Response, data: any) => void;
   sendUnauthorizedResponse: (res: express.Response) => void;
   sendUnprocessableEntityResponse: (res: express.Response, validations: ValidationType[]) => void;
+  sendBadRequestResponse: (res: express.Response, validations: ValidationType[]) => void;
   sendUnknownResponse: (res: express.Response, data: any) => void;
 }
 
@@ -30,6 +31,15 @@ const RequestHandler = (): RequestHandlerType => ({
   sendUnprocessableEntityResponse: (res, validations) => {
     const response: ResponseType = {
       status: 'VALIDATION',
+      data: validations
+    };
+    res.send({
+      data: response
+    });
+  },
+  sendBadRequestResponse: (res, validations) => {
+    const response: ResponseType = {
+      status: 'BAD_REQUEST',
       data: validations
     };
     res.send({
