@@ -1,2 +1,17 @@
-@import '../../../../node_modules/bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/functions';
+
+@import './src/app/assets/scss/variables';
+@import 'variables';
+
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+@import 'bootstrap';
+
+@import 'theme';
+@import './src/app/assets/scss/theme';
+
 @import 'bootstrap-icons/font/bootstrap-icons.min.css';
