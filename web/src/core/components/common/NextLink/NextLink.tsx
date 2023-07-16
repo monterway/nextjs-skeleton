@@ -11,7 +11,7 @@ const NextLink = (props: NextLinkProps): JSX.Element => {
 
   return (
     <Link href={href}>
-      <a className={className}>{title}</a>
+      <a className={`next-link ${className}`}>{title}</a>
     </Link>
   );
 };
