@@ -1,6 +1,6 @@
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import FirebaseApp from './FirebaseApp';
-import firebaseConfig from '../../../../firebase/firebase.json';
+import firebaseConfig from '../../../../../firebase/firebase.json';
 
 const FirebaseAuth = getAuth(FirebaseApp);
 

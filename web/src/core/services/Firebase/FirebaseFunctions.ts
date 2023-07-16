@@ -1,6 +1,6 @@
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 import FirebaseApp from './FirebaseApp';
-import firebaseConfig from '../../../../firebase/firebase.json';
+import firebaseConfig from '../../../../../firebase/firebase.json';
 
 const FirebaseFunctions = getFunctions(FirebaseApp);
 
