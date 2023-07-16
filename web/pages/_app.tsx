@@ -4,7 +4,7 @@ import Head from 'next/head';
 import PageLoader from '../src/core/components/atoms/PageLoader/PageLoader';
 import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator';
 import TranslatorContext from '../src/core/contexts/TranslatorContext';
-import 'assets/scss/style.scss';
+import 'core/assets/scss/style.scss';
 import { UserType } from '../../types/UserType';
 import { onAuthStateChanged } from '@firebase/auth';
 import FirebaseAuth from '../src/core/services/Firebase/FirebaseAuth';
