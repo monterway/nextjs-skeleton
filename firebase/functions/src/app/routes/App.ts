@@ -1,10 +1,10 @@
 import * as express from 'express';
-import RequestHandler from '../../../core/modules/RequestHandler/RequestHandler';
-import { ValidationType } from '../../../../../../types/ValidationType';
+import RequestHandler from '../../core/modules/RequestHandler/RequestHandler';
+import { ValidationType } from '../../../../../types/ValidationType';
 
-const Api = express.Router();
+const App = express.Router();
 
-Api.all('/test', (req, res) => {
+App.all('/test', (req, res) => {
   if (!req.user) {
     RequestHandler().sendUnauthorizedResponse(res);
     return;
@@ -31,4 +31,4 @@ Api.all('/test', (req, res) => {
   return;
 });
 
-export default Api;
+export default App;

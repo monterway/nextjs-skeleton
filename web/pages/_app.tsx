@@ -1,20 +1,17 @@
 import type { AppProps } from 'next/app';
 import React, { Fragment } from 'react';
 import Head from 'next/head';
-import PageLoader from '../src/components/PageLoader/PageLoader';
-import useTranslator, { TranslationsType } from '../src/hooks/useTranslator';
-import TranslatorContext from '../src/contexts/TranslatorContext';
+import PageLoader from '../src/core/components/atoms/PageLoader/PageLoader';
+import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator';
+import TranslatorContext from '../src/core/contexts/TranslatorContext';
 import 'assets/scss/style.scss';
 import { UserType } from '../../types/UserType';
 import { onAuthStateChanged } from '@firebase/auth';
-import FirebaseAuth from '../src/services/Firebase/FirebaseAuth';
-import UserContext from '../src/contexts/UserContext';
-import FirebaseDb from '../src/services/Firebase/FirebaseDb';
+import FirebaseAuth from '../src/core/services/Firebase/FirebaseAuth';
+import UserContext from '../src/core/contexts/UserContext';
+import FirebaseDb from '../src/core/services/Firebase/FirebaseDb';
 import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
-import { ModalType } from '../src/types/ModalType';
-import ModalContext from '../src/contexts/ModalContext';
-import Modal1 from '../src/components/Modal1/Modal1';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -22,7 +19,6 @@ const App = (props: AppProps) => {
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<string>('dark');
   const [user, setUser] = React.useState<UserType | null>(null);
-  const [modal, setModal] = React.useState<ModalType | null>(null);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
   const [translations, setTranslations] = React.useState<TranslationsType>({
     en: {
@@ -84,20 +80,12 @@ const App = (props: AppProps) => {
     <Fragment>
       <TranslatorContext.Provider value={translator}>
         <UserContext.Provider value={user}>
-          <ModalContext.Provider
-            value={{
-              value: modal,
-              set: setModal
-            }}
-          >
-            <Head>
-              <meta charSet="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            </Head>
-            {isLoading ? <PageLoader /> : null}
-            <Modal1 value={modal} set={setModal} />
-            <Component />
-          </ModalContext.Provider>
+          <Head>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
+          {isLoading ? <PageLoader /> : null}
+          <Component />
         </UserContext.Provider>
       </TranslatorContext.Provider>
     </Fragment>
