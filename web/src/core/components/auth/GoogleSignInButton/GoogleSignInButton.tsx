@@ -35,7 +35,7 @@ const GoogleSignInButton1 = (props: GoogleSignInButton1Props): JSX.Element => {
 
   return (
     <button onClick={onClick} className={className}>
-      { children }
+      {children}
     </button>
   );
 };
