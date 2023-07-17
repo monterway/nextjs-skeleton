@@ -1,4 +1,4 @@
-import { ResponseType } from '../../../../types/ResponseType';
+import { ResponseType } from '../../../../../types/ResponseType';
 import { httpsCallable } from '@firebase/functions';
 import FirebaseFunctions from '../../services/Firebase/FirebaseFunctions';
 import { HttpError } from './HttpError';
