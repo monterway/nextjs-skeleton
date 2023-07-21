@@ -1,4 +1,4 @@
-import {TranslatorType} from "../../hooks/useTranslator";
+import { TranslatorType } from '../../hooks/useTranslator';
 
 export interface SeoHandlerType {
   getTitleTag: () => JSX.Element;
@@ -11,21 +11,18 @@ export interface SeoHandlerProps {
 }
 
 const SeoHandler = (props: SeoHandlerProps): SeoHandlerType => {
-  const {
-    pathname,
-    translator,
-  } = props;
+  const { pathname, translator } = props;
 
   if (!translator) {
     return {
-      getTitleTag: () => <title>{ pathname }</title>,
-      getDescriptionTag: () => <meta name="description" content={pathname}/>,
+      getTitleTag: () => <title>{pathname}</title>,
+      getDescriptionTag: () => <meta name="description" content={pathname} />
     };
   }
 
   return {
-    getTitleTag: () => <title>{ translator.translate(`${pathname}_title`) }</title>,
-    getDescriptionTag: () => <meta name="description" content={translator.translate(`${pathname}_description`)}/>,
+    getTitleTag: () => <title>{translator.translate(`${pathname}_title`)}</title>,
+    getDescriptionTag: () => <meta name="description" content={translator.translate(`${pathname}_description`)} />
   };
 };
 
