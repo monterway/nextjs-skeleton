@@ -16,9 +16,13 @@ import ThemeHandlerContext, { ThemeType } from '../src/core/contexts/ThemeHandle
 
 const App = (props: AppProps) => {
   const { Component } = props;
+  const isDayNow = (): boolean => {
+    const hours = new Date().getHours();
+    return hours > 6 && hours < 20;
+  };
 
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState<ThemeType>('light');
+  const [theme, setTheme] = React.useState<ThemeType>(isDayNow() ? 'light' : 'dark');
   const [user, setUser] = React.useState<UserType | null>(null);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
   const [translations, setTranslations] = React.useState<TranslationsType>({
