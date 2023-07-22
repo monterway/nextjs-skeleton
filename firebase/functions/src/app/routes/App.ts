@@ -21,7 +21,7 @@ App.all('/test', (req, res) => {
   }
 
   if (validations.length) {
-    RequestHandler().sendUnprocessableEntityResponse(res, validations);
+    RequestHandler().sendBadRequestResponse(res, validations);
     return;
   }
 

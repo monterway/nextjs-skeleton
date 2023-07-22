@@ -5,7 +5,6 @@ import { ValidationType } from '../../../../../../types/ValidationType';
 export interface RequestHandlerType {
   sendSuccessfulResponse: (res: express.Response, data: any) => void;
   sendUnauthorizedResponse: (res: express.Response) => void;
-  sendUnprocessableEntityResponse: (res: express.Response, validations: ValidationType[]) => void;
   sendBadRequestResponse: (res: express.Response, validations: ValidationType[]) => void;
   sendUnknownResponse: (res: express.Response, data: any) => void;
 }
@@ -23,15 +22,6 @@ const RequestHandler = (): RequestHandlerType => ({
   sendUnauthorizedResponse: (res) => {
     const response: ResponseType = {
       status: 'UNAUTHORIZED'
-    };
-    res.send({
-      data: response
-    });
-  },
-  sendUnprocessableEntityResponse: (res, validations) => {
-    const response: ResponseType = {
-      status: 'VALIDATION',
-      data: validations
     };
     res.send({
       data: response
