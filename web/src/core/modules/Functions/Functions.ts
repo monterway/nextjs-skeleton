@@ -1,8 +1,8 @@
-import {ResponseType} from '../../../../../types/ResponseType';
-import {httpsCallable} from '@firebase/functions';
+import { ResponseType } from '../../../../../types/ResponseType';
+import { httpsCallable } from '@firebase/functions';
 import FirebaseFunctions from '../../services/Firebase/FirebaseFunctions';
-import {HttpError} from './HttpError';
-import {FunctionsError} from "./FunctionsError";
+import { HttpError } from './HttpError';
+import { FunctionsError } from './FunctionsError';
 
 export interface FunctionsType {
   call: (path: string, data?: any) => Promise<ResponseType>;
@@ -19,12 +19,10 @@ const Functions = (): FunctionsType => ({
       } else {
         throw new HttpError(response);
       }
-    }
-    catch (error: any) {
+    } catch (error: any) {
       if (error instanceof HttpError) {
         throw error;
-      }
-      else {
+      } else {
         throw new FunctionsError();
       }
     }
