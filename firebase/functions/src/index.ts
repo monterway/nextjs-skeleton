@@ -20,4 +20,4 @@ app.use(AuthModule().setUserInRequest);
 app.use("/auth", AuthRoutes);
 app.use("/app", AppRoutes);
 
-exports.app = functions.https.onRequest(app);
+exports.app = functions.region("europe-west3").https.onRequest(app);
