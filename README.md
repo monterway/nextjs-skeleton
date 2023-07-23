@@ -91,6 +91,8 @@
 55. Click on the `pencil` icon on the line where `Name` is `firebase-adminsdk`
 56. Make sure following roles are assigned: 
     - `Service Account User`
+    - `Firebase Rules Admin`
+    - `Cloud Datastore Index Admin`
 57. Click `SAVE`
 
 ## Fetch skeleton
