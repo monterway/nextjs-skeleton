@@ -1,0 +1,30 @@
+name: Firebase Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: 'Deploy'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@master
+      - name: 'Setup Node.js 16'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: 'Install dependencies'
+        run: 'cd ./firebase/functions && npm i'
+      - name: 'Deploy'
+        uses: w9jds/firebase-action@master
+        with:
+          args: 'deploy --only functions --debug'
+        env:
+          GCP_SA_KEY: '${{ secrets.GCP_SA_KEY }}'
+          PROJECT_PATH: './firebase'
