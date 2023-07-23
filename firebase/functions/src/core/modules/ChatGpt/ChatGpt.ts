@@ -1,18 +1,26 @@
-import axios, { AxiosError } from 'axios';
+import axios, {AxiosError} from "axios";
 
 export enum ChatGpt3RandomnessIndex {
-  'low' = 0,
-  'low-medium' = 0.25,
-  'medium' = 0.5,
-  'medium-high' = 0.75,
-  'high' = 1
+  "low" = 0,
+  "low-medium" = 0.25,
+  "medium" = 0.5,
+  "medium-high" = 0.75,
+  "high" = 1,
 }
 
-export type ChatGptErrorCode = 'INVALID_REQUEST' | 'TOO_MANY_CHARACTERS' | 'UNKNOWN';
+export type ChatGptErrorCode =
+  | "INVALID_REQUEST"
+  | "TOO_MANY_CHARACTERS"
+  | "UNKNOWN";
 
 export type ChatGptQuestion = string;
 
-export type ChatGptRandomness = 'low' | 'low-medium' | 'medium' | 'medium-high' | 'high';
+export type ChatGptRandomness =
+  | "low"
+  | "low-medium"
+  | "medium"
+  | "medium-high"
+  | "high";
 
 export class ChatGptError extends Error {
   code: ChatGptErrorCode;
@@ -27,42 +35,46 @@ export class ChatGptError extends Error {
 
 export interface ChatGptProps {
   apiKey: string;
-  version: 'v1';
+  version: "v1";
 }
 
 export interface ChatGptType {
-  ask: (question: ChatGptQuestion, systemContext: ChatGptQuestion, randomness: ChatGptRandomness) => Promise<string>;
+  ask: (
+    question: ChatGptQuestion,
+    systemContext: ChatGptQuestion,
+    randomness: ChatGptRandomness
+  ) => Promise<string>;
 }
 
 const ChatGpt = (props: ChatGptProps): ChatGptType => {
-  const { apiKey, version } = props;
+  const {apiKey, version} = props;
 
   const client = axios.create({
     baseURL: `https://api.openai.com/${version}`,
     headers: {
-      Authorization: 'Bearer ' + apiKey
-    }
+      Authorization: "Bearer " + apiKey,
+    },
   });
 
   const ask = async (
     question: ChatGptQuestion,
     systemContext: ChatGptQuestion,
-    randomness: ChatGptRandomness = 'medium'
+    randomness: ChatGptRandomness = "medium"
   ): Promise<string> => {
     try {
-      const response = await client.post(`/chat/completions`, {
-        model: 'gpt-3.5-turbo',
+      const response = await client.post("/chat/completions", {
+        model: "gpt-3.5-turbo",
         messages: [
           {
-            role: 'system',
-            content: systemContext
+            role: "system",
+            content: systemContext,
           },
           {
-            role: 'user',
-            content: question
-          }
+            role: "user",
+            content: question,
+          },
         ],
-        temperature: ChatGpt3RandomnessIndex[randomness]
+        temperature: ChatGpt3RandomnessIndex[randomness],
       });
 
       return response.data.choices[0].message.content;
@@ -70,20 +82,23 @@ const ChatGpt = (props: ChatGptProps): ChatGptType => {
       if (e instanceof AxiosError) {
         if (e.response) {
           const data = e.response.data.error;
-          // IF NOT EXISTING CODE IS RETURNED BY ChatGPT add it to the ChatGptErrorCode type
-          const code = data.type.replace('_error', '').toUpperCase() as ChatGptErrorCode;
+          // If not existing code is returned by ChatGPT
+          // add it to the ChatGptErrorCode type
+          const code = data.type
+            .replace("_error", "")
+            .toUpperCase() as ChatGptErrorCode;
           throw new ChatGptError(code, data);
         } else {
-          throw new ChatGptError('UNKNOWN');
+          throw new ChatGptError("UNKNOWN");
         }
       } else {
-        throw new ChatGptError('UNKNOWN');
+        throw new ChatGptError("UNKNOWN");
       }
     }
   };
 
   return {
-    ask
+    ask,
   };
 };
 

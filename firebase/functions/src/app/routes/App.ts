@@ -1,10 +1,10 @@
-import * as express from 'express';
-import RequestHandler from '../../core/modules/RequestHandler/RequestHandler';
-import { ValidationType } from '../../../../../types/ValidationType';
+import * as express from "express";
+import RequestHandler from "../../core/modules/RequestHandler/RequestHandler";
+import {ValidationType} from "../../../../../types/ValidationType";
 
 const App = express.Router();
 
-App.all('/test', (req, res) => {
+App.all("/test", (req, res) => {
   if (!req.user) {
     RequestHandler().sendUnauthorizedResponse(res);
     return;
@@ -13,10 +13,10 @@ App.all('/test', (req, res) => {
   const data = req.body.data;
   const validations: ValidationType[] = [];
 
-  if (!('test' in data)) {
+  if (!("test" in data)) {
     validations.push({
-      field: 'test',
-      error: 'missing'
+      field: "test",
+      error: "missing",
     });
   }
 
@@ -26,7 +26,7 @@ App.all('/test', (req, res) => {
   }
 
   RequestHandler().sendSuccessfulResponse(res, {
-    test: data.test
+    test: data.test,
   });
   return;
 });
