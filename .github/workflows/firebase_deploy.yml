@@ -21,10 +21,17 @@ jobs:
           node-version: '16'
       - name: 'Install dependencies'
         run: 'cd ./firebase/functions && npm i'
-      - name: 'Deploy'
+      - name: 'Deploy functions'
         uses: w9jds/firebase-action@master
         with:
-          args: 'deploy --only functions,firestore'
+          args: 'deploy --only functions'
+        env:
+          GCP_SA_KEY: '${{ secrets.GCP_SA_KEY }}'
+          PROJECT_PATH: './firebase'
+      - name: 'Deploy firestore'
+        uses: w9jds/firebase-action@master
+        with:
+          args: 'deploy --only firestore --force'
         env:
           GCP_SA_KEY: '${{ secrets.GCP_SA_KEY }}'
           PROJECT_PATH: './firebase'
