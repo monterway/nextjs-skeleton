@@ -31,6 +31,13 @@ const App = (props: AppProps) => {
   const [translations, setTranslations] = React.useState<TranslationsType>({});
 
   React.useEffect(() => {
+    setIsAppLoaded(false);
+    setTimeout(() => {
+      setIsAppLoaded(true);
+    }, 600);
+  }, [pathname]);
+
+  React.useEffect(() => {
     const collectionRef = collection(FirebaseDb, 'translations');
     getDocs(collectionRef).then((querySnapshot) => {
       const newFirestoreTranslations = querySnapshot.docs.reduce(
@@ -63,12 +70,6 @@ const App = (props: AppProps) => {
       }
     });
     return () => subscriber();
-  }, []);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsAppLoaded(true);
-    }, 1000);
   }, []);
 
   const { isLoaded: isTranslatorLoaded, translator } = useTranslator({
