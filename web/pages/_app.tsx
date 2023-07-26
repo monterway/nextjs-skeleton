@@ -14,7 +14,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
 import ThemeHandlerContext, { ThemeType } from '../src/core/contexts/ThemeHandlerContext';
 import { useRouter } from 'next/router';
-import SeoHandler from '../src/core/modules/SeoHandler/SeoHandler';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -76,11 +75,6 @@ const App = (props: AppProps) => {
     translations
   });
 
-  const Seo = SeoHandler({
-    pathname,
-    translator: translator ? translator : undefined
-  });
-
   const isLoading = !isAppLoaded || !isTranslatorLoaded;
 
   return (
@@ -93,13 +87,6 @@ const App = (props: AppProps) => {
       >
         <TranslatorContext.Provider value={translator}>
           <UserContext.Provider value={user}>
-            <Head>
-              <meta charSet="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <link rel="icon" type="image/x-icon" href="/favicon.svg" />
-              {Seo.getTitleTag()}
-              {Seo.getDescriptionTag()}
-            </Head>
             {isLoading ? <PageLoader /> : null}
             <Component />
           </UserContext.Provider>

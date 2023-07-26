@@ -1,6 +1,11 @@
 import React from 'react';
-import { TranslatorType } from '../hooks/useTranslator';
+import { Translator, TranslatorType } from '../hooks/useTranslator';
 
-const TranslatorContext = React.createContext<TranslatorType | null>(null);
+const TranslatorContext = React.createContext<TranslatorType>(
+  Translator({
+    locale: 'en',
+    translations: {}
+  })
+);
 
 export default TranslatorContext;

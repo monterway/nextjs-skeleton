@@ -31,10 +31,10 @@ export interface UseTranslatorProps {
 
 export interface UseTranslatorType {
   isLoaded: boolean;
-  translator: TranslatorType | null;
+  translator: TranslatorType;
 }
 
-const Translator = (props: TranslatorProps): TranslatorType => {
+export const Translator = (props: TranslatorProps): TranslatorType => {
   const { locale, translations } = props;
 
   return {
@@ -61,9 +61,14 @@ const Translator = (props: TranslatorProps): TranslatorType => {
 
 const useTranslator = (props: UseTranslatorProps): UseTranslatorType => {
   const { translations } = props;
-  const { locale } = useRouter();
+  const { locale = 'en' } = useRouter();
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
-  const [translator, setTranslator] = React.useState<TranslatorType | null>(null);
+  const [translator, setTranslator] = React.useState<TranslatorType>(
+    Translator({
+      locale,
+      translations
+    })
+  );
 
   React.useEffect(() => {
     setIsLoaded(false);
