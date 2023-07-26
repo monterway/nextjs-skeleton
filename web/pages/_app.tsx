@@ -22,7 +22,7 @@ const App = (props: AppProps) => {
     return hours > 6 && hours < 20;
   };
   const router = useRouter();
-  const { pathname } = router;
+  const { pathname, locales, asPath } = router;
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<ThemeType>(isDayNow() ? 'light' : 'dark');
   const [user, setUser] = React.useState<UserType | null>(null);
@@ -90,6 +90,28 @@ const App = (props: AppProps) => {
             <NextSeo
               title={translator.translate(`${pathname}_title`)}
               description={translator.translate(`${pathname}_description`)}
+              canonical={typeof window !== 'undefined' ? window.location.href : undefined}
+              languageAlternates={
+                locales
+                  ? [
+                      {
+                        hrefLang: 'x-default',
+                        href: `${
+                          typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                        }${new URL(asPath, 'https://www.google.com').pathname}`
+                      },
+                      ...locales.map((locale) => ({
+                        hrefLang: locale,
+                        href: `${
+                          typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                        }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
+                      }))
+                    ]
+                  : []
+              }
+              themeColor={theme}
+              noindex={false}
+              nofollow={false}
             />
             {isLoading ? <PageLoader /> : null}
             <Component />
