@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import React, { Fragment } from 'react';
-import Head from 'next/head';
 import PageLoader from '../src/core/components/atoms/PageLoader/PageLoader';
 import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator';
 import TranslatorContext from '../src/core/contexts/TranslatorContext';
@@ -14,6 +13,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
 import ThemeHandlerContext, { ThemeType } from '../src/core/contexts/ThemeHandlerContext';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -87,6 +87,10 @@ const App = (props: AppProps) => {
       >
         <TranslatorContext.Provider value={translator}>
           <UserContext.Provider value={user}>
+            <NextSeo
+              title={translator.translate(`${pathname}_title`)}
+              description={translator.translate(`${pathname}_description`)}
+            />
             {isLoading ? <PageLoader /> : null}
             <Component />
           </UserContext.Provider>

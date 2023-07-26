@@ -23,6 +23,7 @@
     "isotope-layout": "^3.0.6",
     "itooltip": "^1.1.1",
     "next": "12.2.3",
+    "next-seo": "^6.1.0",
     "nodemailer-react": "^1.0.2",
     "plyr-react": "^5.1.0",
     "progressbar.js": "^1.1.0",
