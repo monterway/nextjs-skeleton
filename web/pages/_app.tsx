@@ -34,7 +34,7 @@ const App = (props: AppProps) => {
     setTimeout(() => {
       setIsAppLoaded(true);
     }, 600);
-  }, [pathname]);
+  }, []);
 
   React.useEffect(() => {
     const collectionRef = collection(FirebaseDb, 'translations');
