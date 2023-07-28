@@ -66,6 +66,8 @@ const App = (props: AppProps) => {
         setUser({
           email: user.email
         });
+      } else {
+        setUser(null);
       }
     });
     return () => subscriber();
