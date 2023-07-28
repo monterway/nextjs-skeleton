@@ -94,6 +94,15 @@
     - `Firebase Rules Admin`
     - `Cloud Datastore Index Admin`
 57. Click `SAVE`
+58. Go to `https://vercel.com/`
+59. Click `Add New`
+60. Choose `Project`
+61. Click `Import` on the project repository
+62. Under `Root Directory` click `Edit`
+63. Click on the circle next to the `web` folder
+64. Click `Continue`
+65. Under `Framework Preset` choose `Next.js`
+66. Click `Deploy`
 
 ## Fetch skeleton
 1. Define skeleton repository: `git remote add template git@github.com:monterway/nextjs-skeleton.git`
