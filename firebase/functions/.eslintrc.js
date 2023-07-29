@@ -35,6 +35,6 @@ module.exports = {
     "no-useless-escape": 0,
     "require-jsdoc": 0,
     "@typescript-eslint/no-explicit-any": 0,
-    "operator-linebreak": ["error", "before"],
+    "operator-linebreak": 0,
   },
 };
