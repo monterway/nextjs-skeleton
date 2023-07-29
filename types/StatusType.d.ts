@@ -1,1 +1,1 @@
-export type StatusType = 'OK'|'UNAUTHORIZED'|'BAD_REQUEST'|'UNKNOWN';
+export type StatusType = "OK" | "UNAUTHORIZED" | "BAD_REQUEST" | "UNKNOWN";

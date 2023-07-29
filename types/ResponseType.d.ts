@@ -1,4 +1,4 @@
-import {StatusType} from "./StatusType";
+import { StatusType } from "./StatusType";
 
 export interface ResponseType {
   status: StatusType;

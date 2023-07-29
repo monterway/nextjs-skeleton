@@ -14,6 +14,12 @@ import merge from 'deepmerge';
 import ThemeHandlerContext, { ThemeType } from '../src/core/contexts/ThemeHandlerContext';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
+import DataRequestsContext from '../src/core/contexts/DataRequestsContext';
+import Functions from '../src/core/modules/Functions/Functions';
+import { DataRequestType } from '../../types/DataRequestType';
+import { GetDataRequestType } from '../../types/GetDataRequestType';
+import { GetDataResponseType } from '../../types/GetDataResponseType';
+import DataContext from '../src/core/contexts/DataContext';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -26,6 +32,9 @@ const App = (props: AppProps) => {
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<ThemeType>(isDayNow() ? 'light' : 'dark');
   const [user, setUser] = React.useState<UserType | null>(null);
+  const [dataRequests, setDataRequests] = React.useState<DataRequestType[]>([]);
+  const [data, setData] = React.useState<GetDataResponseType>({});
+  const [isDataLoaded, setIsDataLoaded] = React.useState<boolean>(true);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
   const [translations, setTranslations] = React.useState<TranslationsType>({});
 
@@ -73,53 +82,78 @@ const App = (props: AppProps) => {
     return () => subscriber();
   }, []);
 
+  React.useEffect(() => {
+    setIsDataLoaded(false);
+
+    const requestData: GetDataRequestType = {
+      dataRequests
+    };
+
+    Functions()
+      .call('data/get-data', requestData)
+      .then((response) => {
+        const responseData = response.data as GetDataResponseType;
+        setData(responseData);
+        setIsDataLoaded(true);
+      });
+  }, [dataRequests]);
+
   const { isLoaded: isTranslatorLoaded, translator } = useTranslator({
     translations
   });
 
-  const isLoading = !isAppLoaded || !isTranslatorLoaded;
+  const isLoading = !isAppLoaded || !isTranslatorLoaded || !isDataLoaded;
 
   return (
     <Fragment>
-      <ThemeHandlerContext.Provider
+      <DataRequestsContext.Provider
         value={{
-          set: setTheme,
-          get: theme
+          set: setDataRequests,
+          get: dataRequests
         }}
       >
-        <TranslatorContext.Provider value={translator}>
-          <UserContext.Provider value={user}>
-            <NextSeo
-              title={translator.translate(`${pathname}_title`)}
-              description={translator.translate(`${pathname}_description`)}
-              canonical={typeof window !== 'undefined' ? window.location.href : undefined}
-              languageAlternates={
-                locales
-                  ? [
-                      {
-                        hrefLang: 'x-default',
-                        href: `${
-                          typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                        }${new URL(asPath, 'https://www.google.com').pathname}`
-                      },
-                      ...locales.map((locale) => ({
-                        hrefLang: locale,
-                        href: `${
-                          typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                        }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
-                      }))
-                    ]
-                  : []
-              }
-              themeColor={theme}
-              noindex={false}
-              nofollow={false}
-            />
-            {isLoading ? <PageLoader /> : null}
-            <Component />
-          </UserContext.Provider>
-        </TranslatorContext.Provider>
-      </ThemeHandlerContext.Provider>
+        <DataContext.Provider value={data}>
+          <ThemeHandlerContext.Provider
+            value={{
+              set: setTheme,
+              get: theme
+            }}
+          >
+            <TranslatorContext.Provider value={translator}>
+              <UserContext.Provider value={user}>
+                <NextSeo
+                  title={translator.translate(`${pathname}_title`)}
+                  description={translator.translate(`${pathname}_description`)}
+                  canonical={typeof window !== 'undefined' ? window.location.href : undefined}
+                  languageAlternates={
+                    locales
+                      ? [
+                          {
+                            hrefLang: 'x-default',
+                            href: `${
+                              typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                            }${new URL(asPath, 'https://www.google.com').pathname}`
+                          },
+                          ...locales.map((locale) => ({
+                            hrefLang: locale,
+                            href: `${
+                              typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                            }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
+                          }))
+                        ]
+                      : []
+                  }
+                  themeColor={theme}
+                  noindex={false}
+                  nofollow={false}
+                />
+                {isLoading ? <PageLoader /> : null}
+                <Component />
+              </UserContext.Provider>
+            </TranslatorContext.Provider>
+          </ThemeHandlerContext.Provider>
+        </DataContext.Provider>
+      </DataRequestsContext.Provider>
     </Fragment>
   );
 };

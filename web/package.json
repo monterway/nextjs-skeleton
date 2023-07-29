@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "sass": "sass --no-source-map src/assets/scss:public/css",
-    "pretty": "prettier --write ."
+    "pretty": "prettier --write .",
+    "pretty-types": "prettier --write ../types"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
