@@ -59,9 +59,9 @@ Data.all("/get-data", (req, res) => {
               !("type" in whereClause) ||
               typeof whereClause.type !== "string" ||
               !("value" in whereClause) ||
-              typeof whereClause.value !== "string" ||
-              typeof whereClause.value !== "number" ||
-              typeof whereClause.value !== "boolean"
+              !["string", "number", "boolean"].includes(
+                typeof whereClause.value
+              )
           ))
     )
   ) {
@@ -76,11 +76,15 @@ Data.all("/get-data", (req, res) => {
 
   const promises: Promise<DocType[]>[] = requestData.dataRequests.map(
     (dataRequest) => {
-      const docsRef = admin.firestore().collection(dataRequest.entity);
+      let docsRef:
+        | admin.firestore.CollectionReference<admin.firestore.DocumentData>
+        | admin.firestore.Query<admin.firestore.DocumentData> = admin
+        .firestore()
+        .collection(dataRequest.entity);
       if ("where" in dataRequest && Array.isArray(dataRequest.where)) {
         dataRequest.where.forEach((whereClause) => {
           if (whereClause.type === "==") {
-            docsRef.where(
+            docsRef = docsRef.where(
               whereClause.property,
               whereClause.type,
               whereClause.value

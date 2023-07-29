@@ -95,6 +95,9 @@ const App = (props: AppProps) => {
         const responseData = response.data as GetDataResponseType;
         setData(responseData);
         setIsDataLoaded(true);
+      })
+      .catch(() => {
+        setIsDataLoaded(true);
       });
   }, [dataRequests]);
 
