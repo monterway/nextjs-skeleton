@@ -90,7 +90,7 @@ const App = (props: AppProps) => {
     };
 
     Functions()
-      .call('get-data', requestData, 'data')
+      .call('data/get-data', requestData)
       .then((response) => {
         const responseData = response.data as GetDataResponseType;
         setData(responseData);

@@ -5,13 +5,13 @@ import { HttpError } from './HttpError';
 import { FunctionsError } from './FunctionsError';
 
 export interface FunctionsType {
-  call: (path: string, data?: any, microserviceId?: 'app' | 'auth' | 'data' | null) => Promise<ResponseType>;
+  call: (path: string, data?: any) => Promise<ResponseType>;
 }
 
 const Functions = (): FunctionsType => ({
-  call: async (path, data = {}, microserviceId: 'app' | 'auth' | 'data' | null = null) => {
+  call: async (path, data = {}) => {
     try {
-      const callable = httpsCallable(FirebaseFunctions, `${microserviceId ? microserviceId : 'app'}/${path}`);
+      const callable = httpsCallable(FirebaseFunctions, `app/${path}`);
       const result = await callable(data);
       const response = result.data as ResponseType;
       if (response.status === 'OK') {
