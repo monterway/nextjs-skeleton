@@ -15,3 +15,11 @@
     height: 4rem;
   }
 }
+
+.form-field {
+  &__number-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
