@@ -32,7 +32,7 @@ module.exports = {
     "new-cap": [
       "error",
       {
-        newIsCap: true,
+        newIsCap: false,
         capIsNew: false,
       },
     ],
