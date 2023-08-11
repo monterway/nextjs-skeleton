@@ -1,3 +1,3 @@
 export interface DocType {
-  uid?: string;
+  uid: string;
 }
