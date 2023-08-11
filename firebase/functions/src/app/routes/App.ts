@@ -1,6 +1,6 @@
 import * as express from "express";
 import RequestHandler from "../../core/modules/RequestHandler/RequestHandler";
-import {TestRequestType} from "../../../../../types/Custom";
+import {TestRequestType, TestResponseType} from "../../../../../types/Custom";
 import Validator from "../../core/modules/Validator/Validator";
 
 const App = express.Router();
@@ -29,9 +29,9 @@ App.all("/test", (req, res) => {
     return;
   }
 
-  RequestHandler().sendSuccessfulResponse(res, {
-    test: requestData.test,
-  });
+  const responseData: TestResponseType = requestData;
+
+  RequestHandler().sendSuccessfulResponse(res, responseData);
   return;
 });
 
