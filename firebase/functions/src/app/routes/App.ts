@@ -1,6 +1,7 @@
 import * as express from "express";
 import RequestHandler from "../../core/modules/RequestHandler/RequestHandler";
-import {ValidationType} from "../../../../../types/ValidationType";
+import {TestRequestType} from "../../../../../types/Custom";
+import Validator from "../../core/modules/Validator/Validator";
 
 const App = express.Router();
 
@@ -10,15 +11,18 @@ App.all("/test", (req, res) => {
     return;
   }
 
-  const data = req.body.data;
-  const validations: ValidationType[] = [];
+  const requestData: TestRequestType = req.body.data;
 
-  if (!("test" in data)) {
-    validations.push({
-      field: "test",
-      error: "missing",
-    });
-  }
+  const requestDataValidator = Validator({
+    definition: {
+      test: {
+        type: String,
+        required: true,
+      },
+    },
+  });
+
+  const validations = requestDataValidator.validate(requestData);
 
   if (validations.length) {
     RequestHandler().sendBadRequestResponse(res, validations);
@@ -26,7 +30,7 @@ App.all("/test", (req, res) => {
   }
 
   RequestHandler().sendSuccessfulResponse(res, {
-    test: data.test,
+    test: requestData.test,
   });
   return;
 });

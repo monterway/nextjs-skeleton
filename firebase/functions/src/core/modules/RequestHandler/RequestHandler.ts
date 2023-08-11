@@ -1,13 +1,13 @@
 import * as express from "express";
 import {ResponseType} from "../../../../../../types/ResponseType";
-import {ValidationType} from "../../../../../../types/ValidationType";
+import {ValidationErrorType} from "../../../../../../types/ValidationErrorType";
 
 export interface RequestHandlerType {
   sendSuccessfulResponse: (res: express.Response, data: any) => void;
   sendUnauthorizedResponse: (res: express.Response) => void;
   sendBadRequestResponse: (
     res: express.Response,
-    validations: ValidationType[]
+    validations: ValidationErrorType[]
   ) => void;
   sendUnknownResponse: (res: express.Response, data: any) => void;
 }
