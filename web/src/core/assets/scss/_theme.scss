@@ -54,4 +54,14 @@
     overflow: scroll;
     text-align: center;
   }
+
+  &__card-list {
+    list-style-type: none;
+  }
+
+  &__card-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }

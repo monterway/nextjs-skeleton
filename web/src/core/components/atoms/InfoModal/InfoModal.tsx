@@ -25,6 +25,16 @@ const InfoModal = (): JSX.Element | null => {
           ) : null}
           <h1 className="m-0 p-0">{infoModal.get.title}</h1>
           {infoModal.get.description ? <p className="m-0 p-0 mt-3">{infoModal.get.description}</p> : null}
+          {infoModal.get.list && infoModal.get.list.length ? (
+            <ul className="info-modal__card-list m-0 p-0 mt-3">
+              {infoModal.get.list.map((item) => (
+                <li className="info-modal__card-list-item">
+                  <i className="bi bi-arrow-right"></i>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       ) : null}
     </div>
