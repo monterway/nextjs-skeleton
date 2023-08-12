@@ -1,6 +1,6 @@
 import * as express from "express";
 import {UserType} from "../../../../../../types/UserType";
-import RequestHandler from "../../modules/RequestHandler/RequestHandler";
+import ResponseHandler from "../../modules/ResponseHandler/ResponseHandler";
 
 const Auth = express.Router();
 
@@ -13,7 +13,7 @@ Auth.all("/me", (req, res) => {
     };
   }
 
-  RequestHandler().sendSuccessfulResponse(res, user);
+  ResponseHandler().sendSuccessfulResponse(res, user);
   return;
 });
 

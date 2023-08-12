@@ -1,52 +1,28 @@
 import * as express from "express";
-import {ResponseType} from "../../../../../../types/ResponseType";
-import {ValidationErrorType} from "../../../../../../types/ValidationErrorType";
+import Translator from "../Translator/Translator";
+import * as translations from "../../../../../../translations.json";
 
 export interface RequestHandlerType {
-  sendSuccessfulResponse: (res: express.Response, data: any) => void;
-  sendUnauthorizedResponse: (res: express.Response) => void;
-  sendBadRequestResponse: (
+  handleRequest: (
+    req: express.Request,
     res: express.Response,
-    validations: ValidationErrorType[]
-  ) => void;
-  sendUnknownResponse: (res: express.Response, data: any) => void;
+    next: express.NextFunction
+  ) => Promise<void>;
 }
 
 const RequestHandler = (): RequestHandlerType => ({
-  sendSuccessfulResponse: (res, data) => {
-    const response: ResponseType = {
-      status: "OK",
-      data,
-    };
-    res.send({
-      data: response,
+  handleRequest: async (req, res, next) => {
+    const request = req.body.data;
+    req.body.data = request.data;
+
+    const locale = request.locale ? request.locale : "en";
+    req.translator = Translator({
+      locale,
+      translations,
     });
-  },
-  sendUnauthorizedResponse: (res) => {
-    const response: ResponseType = {
-      status: "UNAUTHORIZED",
-    };
-    res.send({
-      data: response,
-    });
-  },
-  sendBadRequestResponse: (res, validations) => {
-    const response: ResponseType = {
-      status: "BAD_REQUEST",
-      data: validations,
-    };
-    res.send({
-      data: response,
-    });
-  },
-  sendUnknownResponse: (res, data) => {
-    const response: ResponseType = {
-      status: "UNKNOWN",
-      data,
-    };
-    res.send({
-      data: response,
-    });
+
+    next();
+    return;
   },
 });
 

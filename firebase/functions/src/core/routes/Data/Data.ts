@@ -1,5 +1,5 @@
 import * as express from "express";
-import RequestHandler from "../../modules/RequestHandler/RequestHandler";
+import ResponseHandler from "../../modules/ResponseHandler/ResponseHandler";
 import {GetDataRequestType} from "../../../../../../types/GetDataRequestType";
 import * as admin from "firebase-admin";
 import {DocType} from "../../../../../../types/DocType";
@@ -11,7 +11,7 @@ Data.all("/get-data", (req, res) => {
   const requestData = req.body.data as GetDataRequestType;
 
   if (typeof requestData !== "object") {
-    RequestHandler().sendBadRequestResponse(res, [
+    ResponseHandler().sendBadRequestResponse(res, [
       {
         field: "requestData",
         error: "invalid",
@@ -21,7 +21,7 @@ Data.all("/get-data", (req, res) => {
   }
 
   if (!("dataRequests" in requestData)) {
-    RequestHandler().sendBadRequestResponse(res, [
+    ResponseHandler().sendBadRequestResponse(res, [
       {
         field: "dataRequests",
         error: "missing",
@@ -31,7 +31,7 @@ Data.all("/get-data", (req, res) => {
   }
 
   if (!Array.isArray(requestData.dataRequests)) {
-    RequestHandler().sendBadRequestResponse(res, [
+    ResponseHandler().sendBadRequestResponse(res, [
       {
         field: "dataRequests",
         error: "invalid",
@@ -65,7 +65,7 @@ Data.all("/get-data", (req, res) => {
           ))
     )
   ) {
-    RequestHandler().sendBadRequestResponse(res, [
+    ResponseHandler().sendBadRequestResponse(res, [
       {
         field: "dataRequests",
         error: "invalid",
@@ -120,7 +120,7 @@ Data.all("/get-data", (req, res) => {
         }),
       {}
     );
-    RequestHandler().sendSuccessfulResponse(res, responseData);
+    ResponseHandler().sendSuccessfulResponse(res, responseData);
     return;
   });
 });

@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import React, { Fragment } from 'react';
 import PageLoader from '../src/core/components/atoms/PageLoader/PageLoader';
 import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator';
+import * as translationsData from '../../translations.json';
 import TranslatorContext from '../src/core/contexts/TranslatorContext';
 import 'core/assets/scss/style.scss';
 import { UserType } from '../../types/UserType';
@@ -13,6 +14,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import merge from 'deepmerge';
 import ThemeHandlerContext, { ThemeType } from '../src/core/contexts/ThemeHandlerContext';
 import { useRouter } from 'next/router';
+// @ts-ignore
 import { NextSeo } from 'next-seo';
 import DataRequestsContext from '../src/core/contexts/DataRequestsContext';
 import Functions from '../src/core/modules/Functions/Functions';
@@ -39,7 +41,7 @@ const App = (props: AppProps) => {
   const [data, setData] = React.useState<GetDataResponseType>({});
   const [isDataLoaded, setIsDataLoaded] = React.useState<boolean>(true);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
-  const [translations, setTranslations] = React.useState<TranslationsType>({});
+  const [translations, setTranslations] = React.useState<TranslationsType>(translationsData);
   const [infoModal, setInfoModal] = React.useState<InfoModalType | null>(null);
 
   React.useEffect(() => {

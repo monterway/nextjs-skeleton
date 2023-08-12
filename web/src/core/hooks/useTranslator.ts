@@ -49,9 +49,9 @@ export const Translator = (props: TranslatorProps): TranslatorType => {
         : translationIdWithLocale;
       if (Object.keys(values).length > 0) {
         let parsedMessage = message;
-        for (const valueKey in values) {
+        Object.keys(values).forEach((valueKey) => {
           parsedMessage = parsedMessage.replace('{{ ' + valueKey + ' }}', values[valueKey]);
-        }
+        });
         return parsedMessage;
       }
       return message;

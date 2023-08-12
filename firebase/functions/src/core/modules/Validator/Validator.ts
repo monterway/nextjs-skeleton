@@ -2,9 +2,11 @@
 const Schema = require("validate");
 import * as validate from "validate";
 import {ValidationErrorType} from "../../../../../../types/ValidationErrorType";
+import {TranslatorType} from "../Translator/Translator";
 
 export interface ValidationSchemaProps {
   definition: validate.SchemaDefinition;
+  translator: TranslatorType;
   options?: validate.ValidationOptions;
 }
 
@@ -16,10 +18,13 @@ export interface ValidationSchemaType {
 }
 
 const Validator = (props: ValidationSchemaProps): ValidationSchemaType => {
-  const {definition, options = {}} = props;
+  const {definition, translator, options = {}} = props;
 
   const schema = new Schema(definition, options).message({
-    required: (path: string) => `${path} is required.`,
+    required: (path: string) =>
+      translator.translate("messages_required", {
+        path: translator.translate(`fields_${path}`),
+      }),
   });
 
   return {

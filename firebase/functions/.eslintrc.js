@@ -27,7 +27,9 @@ module.exports = {
     "indent": [
       "error",
       2,
-      {"ignoredNodes": ["MemberExpression", "SwitchCase"]},
+      {
+        "ignoredNodes": ["MemberExpression", "SwitchCase"],
+      },
     ],
     "new-cap": [
       "error",
@@ -40,5 +42,11 @@ module.exports = {
     "require-jsdoc": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "operator-linebreak": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 90,
+      },
+    ],
   },
 };

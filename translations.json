@@ -1,0 +1,7 @@
+{
+  "en": {
+    "fields_test": "Test",
+    "messages_required": "{{ path }} is required.",
+    "messages_type": "{{ path }} is not valid."
+  }
+}

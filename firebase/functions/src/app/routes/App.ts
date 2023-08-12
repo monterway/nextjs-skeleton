@@ -1,5 +1,5 @@
 import * as express from "express";
-import RequestHandler from "../../core/modules/RequestHandler/RequestHandler";
+import ResponseHandler from "../../core/modules/ResponseHandler/ResponseHandler";
 import {TestRequestType, TestResponseType} from "../../../../../types/Custom";
 import Validator from "../../core/modules/Validator/Validator";
 
@@ -7,7 +7,7 @@ const App = express.Router();
 
 App.all("/test", (req, res) => {
   if (!req.user) {
-    RequestHandler().sendUnauthorizedResponse(res);
+    ResponseHandler().sendUnauthorizedResponse(res);
     return;
   }
 
@@ -16,22 +16,23 @@ App.all("/test", (req, res) => {
   const requestDataValidator = Validator({
     definition: {
       test: {
-        type: String,
         required: true,
+        type: String,
       },
     },
+    translator: req.translator,
   });
 
   const validations = requestDataValidator.validate(requestData);
 
   if (validations.length) {
-    RequestHandler().sendBadRequestResponse(res, validations);
+    ResponseHandler().sendBadRequestResponse(res, validations);
     return;
   }
 
   const responseData: TestResponseType = requestData;
 
-  RequestHandler().sendSuccessfulResponse(res, responseData);
+  ResponseHandler().sendSuccessfulResponse(res, responseData);
   return;
 });
 
