@@ -107,7 +107,7 @@ const App = (props: AppProps) => {
       .catch(() => {
         setIsDataLoaded(true);
       });
-  }, [dataRequests]);
+  }, [dataRequests, asPath]);
 
   const { isLoaded: isTranslatorLoaded, translator } = useTranslator({
     translations
