@@ -36,7 +36,11 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  transition: height ease-in 0.5s;
+  transition: height ease-in 0.2s;
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &--active {
     height: 100vh;

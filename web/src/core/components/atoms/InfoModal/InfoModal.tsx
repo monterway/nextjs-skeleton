@@ -8,11 +8,14 @@ const InfoModal = (): JSX.Element | null => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsActive(infoModal.get !== null);
-    }, 500);
+    }, 200);
   }, [infoModal.get]);
 
   return (
-    <div className={`info-modal ${infoModal.get !== null ? 'info-modal--active' : ''}`}>
+    <div
+      className={`info-modal ${infoModal.get !== null ? 'info-modal--active' : ''}`}
+      onClick={() => infoModal.set(null)}
+    >
       {infoModal.get !== null ? (
         <div className={`info-modal__card ${isActive ? 'info-modal__card--active' : ''} card`}>
           {infoModal.get.icon ? (
