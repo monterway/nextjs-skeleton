@@ -41,7 +41,9 @@ const App = (props: AppProps) => {
   const [data, setData] = React.useState<GetDataResponseType>({});
   const [isDataLoaded, setIsDataLoaded] = React.useState<boolean>(true);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
-  const [translations, setTranslations] = React.useState<TranslationsType>(translationsData);
+  const [translations, setTranslations] = React.useState<TranslationsType>(
+    translationsData as unknown as TranslationsType
+  );
   const [infoModal, setInfoModal] = React.useState<InfoModalType | null>(null);
 
   React.useEffect(() => {
