@@ -23,3 +23,31 @@
     gap: 20px;
   }
 }
+
+.info-modal {
+  position: fixed;
+  width: 100vw;
+  height: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: height ease-in 0.5s;
+
+  &--active {
+    height: 100vh;
+  }
+
+  &__card {
+    background-color: var(--bs-body-bg);
+    padding: 7%;
+    max-height: 90%;
+    max-width: 90%;
+    overflow: scroll;
+    text-align: center;
+  }
+}

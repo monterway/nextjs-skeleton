@@ -20,6 +20,9 @@ import { DataRequestType } from '../../types/DataRequestType';
 import { GetDataRequestType } from '../../types/GetDataRequestType';
 import { GetDataResponseType } from '../../types/GetDataResponseType';
 import DataContext from '../src/core/contexts/DataContext';
+import { InfoModalType } from '../src/core/types/InfoModalType';
+import InfoModalContext from 'core/contexts/InfoModalContext';
+import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
 
 const App = (props: AppProps) => {
   const { Component } = props;
@@ -37,6 +40,7 @@ const App = (props: AppProps) => {
   const [isDataLoaded, setIsDataLoaded] = React.useState<boolean>(true);
   const [firestoreTranslations, setFirestoreTranslations] = React.useState<TranslationsType>({});
   const [translations, setTranslations] = React.useState<TranslationsType>({});
+  const [infoModal, setInfoModal] = React.useState<InfoModalType | null>(null);
 
   React.useEffect(() => {
     setIsAppLoaded(false);
@@ -124,34 +128,42 @@ const App = (props: AppProps) => {
           >
             <TranslatorContext.Provider value={translator}>
               <UserContext.Provider value={user}>
-                <NextSeo
-                  title={translator.translate(`${pathname}_title`)}
-                  description={translator.translate(`${pathname}_description`)}
-                  canonical={typeof window !== 'undefined' ? window.location.href : undefined}
-                  languageAlternates={
-                    locales
-                      ? [
-                          {
-                            hrefLang: 'x-default',
-                            href: `${
-                              typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                            }${new URL(asPath, 'https://www.google.com').pathname}`
-                          },
-                          ...locales.map((locale) => ({
-                            hrefLang: locale,
-                            href: `${
-                              typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                            }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
-                          }))
-                        ]
-                      : []
-                  }
-                  themeColor={theme}
-                  noindex={false}
-                  nofollow={false}
-                />
-                {isLoading ? <PageLoader /> : null}
-                <Component />
+                <InfoModalContext.Provider
+                  value={{
+                    set: setInfoModal,
+                    get: infoModal
+                  }}
+                >
+                  <NextSeo
+                    title={translator.translate(`${pathname}_title`)}
+                    description={translator.translate(`${pathname}_description`)}
+                    canonical={typeof window !== 'undefined' ? window.location.href : undefined}
+                    languageAlternates={
+                      locales
+                        ? [
+                            {
+                              hrefLang: 'x-default',
+                              href: `${
+                                typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                              }${new URL(asPath, 'https://www.google.com').pathname}`
+                            },
+                            ...locales.map((locale) => ({
+                              hrefLang: locale,
+                              href: `${
+                                typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                              }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
+                            }))
+                          ]
+                        : []
+                    }
+                    themeColor={theme}
+                    noindex={false}
+                    nofollow={false}
+                  />
+                  {isLoading ? <PageLoader /> : null}
+                  <InfoModal />
+                  <Component />
+                </InfoModalContext.Provider>
               </UserContext.Provider>
             </TranslatorContext.Provider>
           </ThemeHandlerContext.Provider>
