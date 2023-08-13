@@ -62,7 +62,9 @@ Data.all("/get-data", (req, res) => {
               !["string", "number", "boolean"].includes(
                 typeof whereClause.value
               )
-          ))
+          )) ||
+        ("uid" in dataRequest && typeof dataRequest.uid !== "string") ||
+        (!("uid" in dataRequest) && !("where" in dataRequest))
     )
   ) {
     ResponseHandler().sendBadRequestResponse(res, [
@@ -76,12 +78,12 @@ Data.all("/get-data", (req, res) => {
 
   const promises: Promise<DocType[]>[] = requestData.dataRequests.map(
     (dataRequest) => {
-      let docsRef:
-        | admin.firestore.CollectionReference<admin.firestore.DocumentData>
-        | admin.firestore.Query<admin.firestore.DocumentData> = admin
-        .firestore()
-        .collection(dataRequest.entity);
       if ("where" in dataRequest && Array.isArray(dataRequest.where)) {
+        let docsRef = admin
+          .firestore()
+          .collection(
+            dataRequest.entity
+          ) as admin.firestore.Query<admin.firestore.DocumentData>;
         dataRequest.where.forEach((whereClause) => {
           if (whereClause.type === "==") {
             docsRef = docsRef.where(
@@ -91,22 +93,50 @@ Data.all("/get-data", (req, res) => {
             );
           }
         });
+        return new Promise((resolve) => {
+          docsRef
+            .get()
+            .then((docsSnapshot) => {
+              resolve(
+                docsSnapshot.docs.map((doc) => ({
+                  ...doc.data(),
+                  uid: doc.id,
+                }))
+              );
+            })
+            .catch(() => {
+              resolve([]);
+            });
+        });
+      } else if ("uid" in dataRequest && typeof dataRequest.uid === "string") {
+        const docRef = admin
+          .firestore()
+          .collection(dataRequest.entity)
+          .doc(
+            dataRequest.uid
+          ) as admin.firestore.DocumentReference<admin.firestore.DocumentData>;
+        return new Promise((resolve) => {
+          docRef
+            .get()
+            .then((docSnapshot) => {
+              if (docSnapshot.exists) {
+                resolve([
+                  {
+                    ...docSnapshot.data(),
+                    uid: docSnapshot.id,
+                  },
+                ]);
+              }
+            })
+            .catch(() => {
+              resolve([]);
+            });
+        });
+      } else {
+        return new Promise((resolve) => {
+          resolve([]);
+        });
       }
-      return new Promise((resolve) => {
-        docsRef
-          .get()
-          .then((docsSnapshot) => {
-            resolve(
-              docsSnapshot.docs.map((doc) => ({
-                ...doc.data(),
-                uid: doc.id,
-              }))
-            );
-          })
-          .catch(() => {
-            resolve([]);
-          });
-      });
     }
   );
 

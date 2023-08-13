@@ -4,4 +4,5 @@ export interface DataRequestType {
   id: string;
   entity: string;
   where?: DataRequestWhereType[];
+  uid?: string;
 }
