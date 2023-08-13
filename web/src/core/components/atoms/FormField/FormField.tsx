@@ -12,7 +12,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 
-export type FormFieldType = 'text' | 'select' | 'number';
+export type FormFieldType = 'text' | 'select' | 'select-radio' | 'number';
 
 export interface FormFieldProps {
   id: string;
@@ -126,6 +126,26 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
               </option>
             ))}
           </Form.Select>
+        );
+      case 'select-radio':
+        return (
+          <div>
+            {selectOptions.map((selectOption) => (
+              <Form.Check
+                key={selectOption}
+                type="radio"
+                label={translator.translate(`${translationPath}_option_${selectOption}`)}
+                onChange={() => {
+                  setInFormData((data) => ({
+                    ...data,
+                    [id]: selectOption
+                  }));
+                }}
+                checked={formData[id] === selectOption}
+                id={selectOption}
+              />
+            ))}
+          </div>
         );
       case 'number':
         return (
