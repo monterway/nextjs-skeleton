@@ -29,7 +29,7 @@
 1. Define available locales and default locale:
    - `web/next.config.js`
 
-## Create project in Firebase Console
+## Project setup
 1. Go to `https://console.firebase.google.com/`
 2. Create new project
 3. Check the `Enable Google Analytics for this project` checkbox
@@ -103,8 +103,38 @@
 64. Click `Continue`
 65. Under `Framework Preset` choose `Next.js`
 66. Click `Deploy`
+67. Go to `https://vercel.com/`
+68. Click on the project
+69. Click `Settings`
+70. Click `Domains`
+71. Copy the domain
+72. Go to `https://console.firebase.google.com/project/###_PROJECT_ID_###/authentication/settings`
+73. Click `Authorized domains`
+74. Click `Add domain`
+75. Paste the copied domain from step 71
+76. Click `Add`
 
 ## Fetch skeleton
 1. Define skeleton repository: `git remote add template git@github.com:monterway/nextjs-skeleton.git`
 2. Fetch the skeleton repository: `git fetch --all`
 3. Merge updates into current project: `git merge template/master --allow-unrelated-histories`
+
+## Translations
+The file with the translations for both cloud functions and web are located inside the `translations.json` file.
+Inside it you will see `"// DYNAMIC": "DYNAMIC",` line.
+The custom translations should be located before it.
+Under it are the translations, which are used by component, which are building the translation key dynamically and can't be found be directly searching for the translation key string inside the projects.
+
+### Translation patterns
+#### Used by `web/src/core/components/atoms/FormField/FormField.tsx`
+1. `form_###_FORM_ID_###_field_###_FIELD_ID_###_label`: Label of a form field
+2. `form_###_FORM_ID_###_field_###_FIELD_ID_###_placeholder`: Placeholder of a form field
+3. `form_###_FORM_ID_###_field_###_FIELD_ID_###_option_###_OPTION_ID_###`: Option label in `<select>`
+4. `form_###_FORM_ID_###_field_###_FIELD_ID_###_option_###_OPTION_ID_###`: Option label in `<select>`
+#### Used by `firebase/functions/src/core/modules/Validator/Validator.ts`
+1. `fields_###_FIELD_ID_###`: Name of field
+2. `messages_###_VALIDATION_RULE_###`: Message for rule
+   - `{{ rule }}`: can be used inside the translation to output name of the field, which didn't pass the validation
+#### Used by `web/pages/_app.tsx` (SEO)
+1. `###_ROUTE_PATH_###_title`: Title of the page
+2. `###_ROUTE_PATH_###_description`: Meta description of the page
