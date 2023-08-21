@@ -91,6 +91,10 @@ const App = (props: AppProps) => {
   }, []);
 
   React.useEffect(() => {
+    if (dataRequests.length === 0) {
+      return;
+    }
+
     setIsDataLoaded(false);
 
     const requestData: GetDataRequestType = {
