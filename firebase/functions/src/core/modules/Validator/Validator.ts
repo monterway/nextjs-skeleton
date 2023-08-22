@@ -25,6 +25,14 @@ const Validator = (props: ValidationSchemaProps): ValidationSchemaType => {
       translator.translate("messages_required", {
         path: translator.translate(`fields_${path}`),
       }),
+    type: (path: string) =>
+      translator.translate("messages_type", {
+        path: translator.translate(`fields_${path}`),
+      }),
+    match: (path: string) =>
+      translator.translate("messages_match", {
+        path: translator.translate(`fields_${path}`),
+      }),
   });
 
   return {

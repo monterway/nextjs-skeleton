@@ -5,6 +5,7 @@
     "form_test_field_test_placeholder": "Test placeholder",
     "fields_test": "Test",
     "messages_required": "{{ path }} is required.",
-    "messages_type": "{{ path }} is not valid."
+    "messages_type": "{{ path }} is not valid.",
+    "messages_match": "{{ path }} is not valid."
   }
 }
