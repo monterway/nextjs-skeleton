@@ -1,5 +1,6 @@
 {
   "en": {
+    "invalidInput": "Invalid input",
     "unknownError": "Unknown error",
     "somethingUnexpectedHappened": "Something unexpected happened.",
     "language_en": "English",
