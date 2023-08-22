@@ -1,5 +1,8 @@
 {
   "en": {
+    "unknownError": "Unknown error",
+    "somethingUnexpectedHappened": "Something unexpected happened.",
+    "language_en": "English",
     "// DYNAMIC": "DYNAMIC",
     "form_test_field_test_label": "Test label",
     "form_test_field_test_placeholder": "Test placeholder",
