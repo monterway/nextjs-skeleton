@@ -25,8 +25,15 @@ import DataContext from '../src/core/contexts/DataContext';
 import { InfoModalType } from '../src/core/types/InfoModalType';
 import InfoModalContext from 'core/contexts/InfoModalContext';
 import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
+import Script from 'next/script';
+import { ConfigType } from '../../types/ConfigType';
 
 const App = (props: AppProps) => {
+  const config: ConfigType = {
+    defaultTheme: 'light',
+    isTimeThemeEnabled: true,
+    googleAnalyticsId: '---'
+  };
   const { Component } = props;
   const isDayNow = (): boolean => {
     const hours = new Date().getHours();
@@ -35,7 +42,9 @@ const App = (props: AppProps) => {
   const router = useRouter();
   const { pathname, locales, asPath } = router;
   const [isAppLoaded, setIsAppLoaded] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState<ThemeType>(isDayNow() ? 'light' : 'dark');
+  const [theme, setTheme] = React.useState<ThemeType>(
+    config.isTimeThemeEnabled ? (isDayNow() ? 'light' : 'dark') : config.defaultTheme
+  );
   const [user, setUser] = React.useState<UserType | null>(null);
   const [dataRequests, setDataRequests] = React.useState<DataRequestType[]>([]);
   const [data, setData] = React.useState<GetDataResponseType>({});
@@ -167,6 +176,23 @@ const App = (props: AppProps) => {
                     themeColor={theme}
                     noindex={false}
                     nofollow={false}
+                  />
+                  <Script
+                    strategy="afterInteractive"
+                    src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsId}`}
+                  />
+                  <Script
+                    id="google-analytics"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                      __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+            
+                        gtag('config', '${config.googleAnalyticsId}');
+                      `
+                    }}
                   />
                   {isLoading ? <PageLoader /> : null}
                   <InfoModal />
