@@ -27,12 +27,12 @@ import InfoModalContext from 'core/contexts/InfoModalContext';
 import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
 import Script from 'next/script';
 import { ConfigType } from '../../types/ConfigType';
+import * as firebaseConfig from '../../firebase/config.json';
 
 const App = (props: AppProps) => {
   const config: ConfigType = {
     defaultTheme: 'light',
-    isTimeThemeEnabled: true,
-    googleAnalyticsId: '---'
+    isTimeThemeEnabled: true
   };
   const { Component } = props;
   const isDayNow = (): boolean => {
@@ -179,7 +179,7 @@ const App = (props: AppProps) => {
                   />
                   <Script
                     strategy="afterInteractive"
-                    src={`https://www.googletagmanager.com/gtag/js?id=${config.googleAnalyticsId}`}
+                    src={`https://www.googletagmanager.com/gtag/js?id=${firebaseConfig.measurementId}`}
                   />
                   <Script
                     id="google-analytics"
@@ -190,7 +190,7 @@ const App = (props: AppProps) => {
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
             
-                        gtag('config', '${config.googleAnalyticsId}');
+                        gtag('config', '${firebaseConfig.measurementId}');
                       `
                     }}
                   />
