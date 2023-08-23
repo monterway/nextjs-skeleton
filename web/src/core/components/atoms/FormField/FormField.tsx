@@ -12,7 +12,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 
-export type FormFieldType = 'text' | 'select' | 'select-radio' | 'number';
+export type FormFieldType = 'text' | 'select' | 'select-radio' | 'number' | 'number-text';
 
 export interface FormFieldOption {
   id: string;
@@ -28,6 +28,7 @@ export interface FormFieldProps {
   numberTypeConfig?: {
     min?: number;
     max?: number;
+    step?: string;
   };
   hasLabel?: boolean;
   size?: 'sm' | 'lg';
@@ -50,7 +51,8 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     type = 'text',
     numberTypeConfig = {
       min: 0,
-      max: 5
+      max: 5,
+      step: 'any'
     },
     hasLabel = true,
     size = undefined,
@@ -178,6 +180,46 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
               <i className="bi bi-plus-circle"></i>
             </Button>
           </div>
+        );
+      case 'number-text':
+        return (
+          <Form.Control
+            type="number"
+            placeholder={translator.translate(`${translationPath}_placeholder`)}
+            size={size}
+            value={formData[id]}
+            step={numberTypeConfig.step}
+            onChange={(event) => {
+              if (!isNaN(parseFloat(event.target.value))) {
+                if (typeof numberTypeConfig?.min === 'number' && typeof numberTypeConfig?.max === 'number') {
+                  if (
+                    parseFloat(event.target.value) >= numberTypeConfig.min &&
+                    parseFloat(event.target.value) <= numberTypeConfig.max
+                  ) {
+                    setInFormData((data) => ({
+                      ...data,
+                      [id]: parseFloat(event.target.value)
+                    }));
+                  }
+                } else if (typeof numberTypeConfig?.min === 'number') {
+                  if (parseFloat(event.target.value) >= numberTypeConfig.min) {
+                    setInFormData((data) => ({
+                      ...data,
+                      [id]: parseFloat(event.target.value)
+                    }));
+                  }
+                } else if (typeof numberTypeConfig?.max === 'number') {
+                  if (parseFloat(event.target.value) <= numberTypeConfig.max) {
+                    setInFormData((data) => ({
+                      ...data,
+                      [id]: parseFloat(event.target.value)
+                    }));
+                  }
+                }
+              }
+            }}
+            {...textInputProps}
+          />
         );
       default:
         return (
