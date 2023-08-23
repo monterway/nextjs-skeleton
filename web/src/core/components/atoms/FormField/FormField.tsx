@@ -135,7 +135,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
               <option key={selectOption.id} value={selectOption.id}>
                 {selectOption.title
                   ? selectOption.title
-                  : translator.translate(`${translationPath}_option_${selectOption}`)}
+                  : translator.translate(`${translationPath}_option_${selectOption.id}`)}
               </option>
             ))}
           </Form.Select>
@@ -150,7 +150,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 label={
                   selectOption.title
                     ? selectOption.title
-                    : translator.translate(`${translationPath}_option_${selectOption}`)
+                    : translator.translate(`${translationPath}_option_${selectOption.id}`)
                 }
                 onChange={() => {
                   setInFormData((data) => ({
