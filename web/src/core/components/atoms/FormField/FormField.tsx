@@ -14,6 +14,11 @@ import { FormDataType } from '../../../types/FormDataType';
 
 export type FormFieldType = 'text' | 'select' | 'select-radio' | 'number';
 
+export interface FormFieldOption {
+  id: string;
+  title?: string;
+}
+
 export interface FormFieldProps {
   id: string;
   setInFormData: Dispatch<SetStateAction<FormDataType>>;
@@ -26,12 +31,14 @@ export interface FormFieldProps {
   };
   hasLabel?: boolean;
   size?: 'sm' | 'lg';
-  selectOptions?: string[];
+  selectOptions?: FormFieldOption[];
   colProps?: ColProps;
   formGroupProps?: FormGroupProps;
   labelProps?: FormLabelProps;
   textInputProps?: FormControlProps;
   selectInputProps?: FormSelectProps;
+  label?: string;
+  placeholder?: string;
 }
 
 const FormField = (props: FormFieldProps): JSX.Element | null => {
@@ -54,7 +61,9 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     labelProps = {},
     textInputProps = {},
     selectInputProps = {},
-    formGroupProps = {}
+    formGroupProps = {},
+    label = null,
+    placeholder = null
   } = props;
   const translator = React.useContext(TranslatorContext);
 
@@ -121,8 +130,10 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
             {...selectInputProps}
           >
             {selectOptions.map((selectOption) => (
-              <option key={selectOption} value={selectOption}>
-                {translator.translate(`${translationPath}_option_${selectOption}`)}
+              <option key={selectOption.id} value={selectOption.id}>
+                {selectOption.title
+                  ? selectOption.title
+                  : translator.translate(`${translationPath}_option_${selectOption}`)}
               </option>
             ))}
           </Form.Select>
@@ -132,17 +143,21 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
           <div>
             {selectOptions.map((selectOption) => (
               <Form.Check
-                key={selectOption}
+                key={selectOption.id}
                 type="radio"
-                label={translator.translate(`${translationPath}_option_${selectOption}`)}
+                label={
+                  selectOption.title
+                    ? selectOption.title
+                    : translator.translate(`${translationPath}_option_${selectOption}`)
+                }
                 onChange={() => {
                   setInFormData((data) => ({
                     ...data,
-                    [id]: selectOption
+                    [id]: selectOption.id
                   }));
                 }}
-                checked={formData[id] === selectOption}
-                id={selectOption}
+                checked={formData[id] === selectOption.id}
+                id={selectOption.id}
               />
             ))}
           </div>
@@ -168,7 +183,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
         return (
           <Form.Control
             type={type}
-            placeholder={translator.translate(`${translationPath}_placeholder`)}
+            placeholder={placeholder ? placeholder : translator.translate(`${translationPath}_placeholder`)}
             size={size}
             value={formData[id]}
             onChange={(event) =>
@@ -186,7 +201,9 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
   return (
     <Col key={id} {...colProps}>
       <Form.Group controlId={id} {...formGroupProps}>
-        {hasLabel ? <Form.Label {...labelProps}>{translator.translate(`${translationPath}_label`)}</Form.Label> : null}
+        {hasLabel ? (
+          <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
+        ) : null}
         {inputElement(type)}
       </Form.Group>
     </Col>
