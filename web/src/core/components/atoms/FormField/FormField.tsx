@@ -40,6 +40,7 @@ export interface FormFieldProps {
   selectInputProps?: FormSelectProps;
   label?: string;
   placeholder?: string;
+  note?: JSX.Element;
 }
 
 const FormField = (props: FormFieldProps): JSX.Element | null => {
@@ -65,7 +66,8 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     selectInputProps = {},
     formGroupProps = {},
     label = null,
-    placeholder = null
+    placeholder = null,
+    note = null
   } = props;
   const translator = React.useContext(TranslatorContext);
 
@@ -247,6 +249,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
           <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
         ) : null}
         {inputElement(type)}
+        {note ? note : null}
       </Form.Group>
     </Col>
   );
