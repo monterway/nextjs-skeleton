@@ -1,6 +1,6 @@
 import * as express from "express";
-import {ResponseType} from "../../../../../../types/ResponseType";
-import {ValidationErrorType} from "../../../../../../types/ValidationErrorType";
+import {ResponseType} from "../../../../../../general/types/ResponseType";
+import {ValidationErrorType} from "../../../../../../general/types/ValidationErrorType";
 
 export interface ResponseHandlerType {
   sendSuccessfulResponse: (res: express.Response, data: any) => void;

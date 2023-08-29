@@ -1,4 +1,4 @@
-import {UserType} from "../../../../types/UserType";
+import {UserType} from "../../../../general/types/UserType";
 import {TranslatorType} from "./modules/Translator/Translator";
 
 declare global {

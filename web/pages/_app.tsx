@@ -5,7 +5,7 @@ import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator
 import * as translationsData from '../../translations.json';
 import TranslatorContext from '../src/core/contexts/TranslatorContext';
 import 'core/assets/scss/style.scss';
-import { UserType } from '../../types/UserType';
+import { UserType } from '../../general/types/UserType';
 import { onAuthStateChanged } from '@firebase/auth';
 import FirebaseAuth from '../src/core/services/Firebase/FirebaseAuth';
 import UserContext from '../src/core/contexts/UserContext';
@@ -18,15 +18,15 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import DataRequestsContext from '../src/core/contexts/DataRequestsContext';
 import Functions from '../src/core/modules/Functions/Functions';
-import { DataRequestType } from '../../types/DataRequestType';
-import { GetDataRequestType } from '../../types/GetDataRequestType';
-import { GetDataResponseType } from '../../types/GetDataResponseType';
+import { DataRequestType } from '../../general/types/DataRequestType';
+import { GetDataRequestType } from '../../general/types/GetDataRequestType';
+import { GetDataResponseType } from '../../general/types/GetDataResponseType';
 import DataContext from '../src/core/contexts/DataContext';
 import { InfoModalType } from '../src/core/types/InfoModalType';
 import InfoModalContext from 'core/contexts/InfoModalContext';
 import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
 import Script from 'next/script';
-import { ConfigType } from '../../types/ConfigType';
+import { ConfigType } from '../../general/types/ConfigType';
 import * as firebaseConfig from '../../firebase/config.json';
 
 const App = (props: AppProps) => {

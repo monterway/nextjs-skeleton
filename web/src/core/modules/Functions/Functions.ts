@@ -1,9 +1,9 @@
-import { ResponseType } from '../../../../../types/ResponseType';
+import { ResponseType } from '../../../../../general/types/ResponseType';
 import { httpsCallable } from '@firebase/functions';
 import FirebaseFunctions from '../../services/Firebase/FirebaseFunctions';
 import { HttpError } from './HttpError';
 import { FunctionsError } from './FunctionsError';
-import { RequestType } from '../../../../../types/RequestType';
+import { RequestType } from '../../../../../general/types/RequestType';
 
 export interface FunctionsProps {
   locale?: string;

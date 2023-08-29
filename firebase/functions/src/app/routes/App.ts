@@ -1,6 +1,9 @@
 import * as express from "express";
 import ResponseHandler from "../../core/modules/ResponseHandler/ResponseHandler";
-import {TestRequestType, TestResponseType} from "../../../../../types/Custom";
+import {
+  TestRequestType,
+  TestResponseType,
+} from "../../../../../general/types/Custom";
 import Validator from "../../core/modules/Validator/Validator";
 
 const App = express.Router();

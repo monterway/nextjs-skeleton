@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { DataRequestType } from '../../../../types/DataRequestType';
+import { DataRequestType } from '../../../../general/types/DataRequestType';
 
 export interface DataRequestsContextType {
   set: Dispatch<SetStateAction<DataRequestType[]>>;

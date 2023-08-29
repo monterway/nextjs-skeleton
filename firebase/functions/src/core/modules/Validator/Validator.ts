@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Schema = require("validate");
 import * as validate from "validate";
-import {ValidationErrorType} from "../../../../../../types/ValidationErrorType";
+import {ValidationErrorType} from "../../../../../../general/types/ValidationErrorType";
 import {TranslatorType} from "../Translator/Translator";
 
 export interface ValidationSchemaProps {

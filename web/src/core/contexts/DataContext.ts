@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetDataResponseType } from '../../../../types/GetDataResponseType';
+import { GetDataResponseType } from '../../../../general/types/GetDataResponseType';
 
 const DataContext = React.createContext<GetDataResponseType>({});
 

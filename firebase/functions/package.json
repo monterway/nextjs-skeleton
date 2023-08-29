@@ -6,7 +6,7 @@
     "deploy": "firebase deploy",
     "dev": "firebase emulators:start",
     "pretty": "prettier --write .",
-    "pretty-types": "prettier --write ../../types",
+    "pretty-general": "prettier --write ../../general",
     "lint": "eslint --ext .js,.ts ."
   },
   "engines": {
