@@ -194,7 +194,7 @@ const App = (props: AppProps) => {
                       `
                     }}
                   />
-                  {isLoading ? <PageLoader /> : null}
+                  <PageLoader isVisible={isLoading} />
                   <InfoModal />
                   <Component />
                 </InfoModalContext.Provider>
