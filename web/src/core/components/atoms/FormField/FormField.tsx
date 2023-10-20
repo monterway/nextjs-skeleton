@@ -1,10 +1,26 @@
-import { Button, Form, FormControlProps, FormGroupProps, FormLabelProps, FormSelectProps } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  ColProps,
+  Form,
+  FormControlProps,
+  FormGroupProps,
+  FormLabelProps,
+  FormSelectProps
+} from 'react-bootstrap';
 import React, { Dispatch, SetStateAction } from 'react';
 import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 import FormRange from 'react-bootstrap/FormRange';
 
-export type FormFieldType = 'text' | 'select' | 'select-radio' | 'number' | 'number-text' | 'number-slider';
+export type FormFieldType =
+  | 'text'
+  | 'textarea'
+  | 'select'
+  | 'select-radio'
+  | 'number'
+  | 'number-text'
+  | 'number-slider';
 
 export interface FormFieldOption {
   id: string;
@@ -25,6 +41,7 @@ export interface FormFieldProps {
   hasLabel?: boolean;
   size?: 'sm' | 'lg';
   selectOptions?: FormFieldOption[];
+  colProps?: ColProps;
   formGroupProps?: FormGroupProps;
   labelProps?: FormLabelProps;
   textInputProps?: FormControlProps;
@@ -49,6 +66,9 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     hasLabel = true,
     size = undefined,
     selectOptions = [],
+    colProps = {
+      xs: 12
+    },
     labelProps = {},
     textInputProps = {},
     selectInputProps = {},
@@ -227,6 +247,24 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
             </Button>
           </div>
         );
+      case 'textarea':
+        return (
+          <Form.Control
+            as="textarea"
+            rows={5}
+            type={type}
+            placeholder={placeholder ? placeholder : translator.translate(`${translationPath}_placeholder`)}
+            size={size}
+            value={formData[id]}
+            onChange={(event) =>
+              setInFormData((data) => ({
+                ...data,
+                [id]: event.target.value
+              }))
+            }
+            {...textInputProps}
+          />
+        );
       default:
         return (
           <Form.Control
@@ -247,13 +285,15 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
   };
 
   return (
-    <Form.Group controlId={id} {...formGroupProps}>
-      {hasLabel ? (
-        <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
-      ) : null}
-      {inputElement(type)}
-      {note ? note : null}
-    </Form.Group>
+    <Col key={id} {...colProps}>
+      <Form.Group controlId={id} {...formGroupProps}>
+        {hasLabel ? (
+          <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
+        ) : null}
+        {inputElement(type)}
+        {note ? note : null}
+      </Form.Group>
+    </Col>
   );
 };
 
