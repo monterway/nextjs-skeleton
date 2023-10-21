@@ -1,17 +1,17 @@
-import {
-  Button,
-  Form,
-  FormControlProps,
-  FormGroupProps,
-  FormLabelProps,
-  FormSelectProps
-} from 'react-bootstrap';
+import { Button, Form, FormControlProps, FormGroupProps, FormLabelProps, FormSelectProps } from 'react-bootstrap';
 import React, { Dispatch, SetStateAction } from 'react';
 import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 import FormRange from 'react-bootstrap/FormRange';
 
-export type FormFieldType = 'text' | 'textarea' | 'select' | 'select-radio' | 'number' | 'number-text' | 'number-slider';
+export type FormFieldType =
+  | 'text'
+  | 'textarea'
+  | 'select'
+  | 'select-radio'
+  | 'number'
+  | 'number-text'
+  | 'number-slider';
 
 export interface FormFieldOption {
   id: string;
