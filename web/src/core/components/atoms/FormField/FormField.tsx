@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 import FormRange from 'react-bootstrap/FormRange';
+import { ValidationErrorType } from '../../../../../../general/types/ValidationErrorType';
 
 export type FormFieldType =
   | 'text'
@@ -39,6 +40,7 @@ export interface FormFieldProps {
   label?: string;
   placeholder?: string;
   note?: JSX.Element;
+  validationErrors?: ValidationErrorType[];
 }
 
 const FormField = (props: FormFieldProps): JSX.Element | null => {
@@ -62,7 +64,8 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     formGroupProps = {},
     label = null,
     placeholder = null,
-    note = null
+    note = null,
+    validationErrors = []
   } = props;
   const translator = React.useContext(TranslatorContext);
 
@@ -122,6 +125,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 [id]: event.target.value
               }))
             }
+            isInvalid={validationErrors.length > 0}
             {...selectInputProps}
           >
             {selectOptions.map((selectOption) => (
@@ -153,6 +157,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 }}
                 checked={formData[id] === selectOption.id}
                 id={selectOption.id}
+                isInvalid={validationErrors.length > 0}
               />
             ))}
           </div>
@@ -163,7 +168,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
             <Button variant="outline-primary" size="sm" onClick={makeNumberDown} disabled={!canNumberGoDown()}>
               <i className="bi bi-dash-circle"></i>
             </Button>
-            <span className="lead">{formData[id]}</span>
+            <span className={`lead ${validationErrors.length > 0 ? 'text-danger' : ''}`}>{formData[id]}</span>
             <Button variant="outline-primary" size="sm" onClick={makeNumberUp} disabled={!canNumberGoUp()}>
               <i className="bi bi-plus-circle"></i>
             </Button>
@@ -204,6 +209,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 }
               }
             }}
+            isInvalid={validationErrors.length > 0}
             {...textInputProps}
           />
         );
@@ -227,7 +233,9 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 max={numberTypeConfig?.max}
                 step={numberTypeConfig?.step}
               />
-              <span className="lead w-25 text-center">{formData[id]}</span>
+              <span className={`lead w-25 text-center ${validationErrors.length > 0 ? 'text-danger' : ''}`}>
+                {formData[id]}
+              </span>
             </div>
             <Button variant="outline-primary" size="sm" onClick={makeNumberUp} disabled={!canNumberGoUp()}>
               <i className="bi bi-plus-circle"></i>
@@ -249,6 +257,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 [id]: event.target.value
               }))
             }
+            isInvalid={validationErrors.length > 0}
             {...textInputProps}
           />
         );
@@ -265,6 +274,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                 [id]: event.target.value
               }))
             }
+            isInvalid={validationErrors.length > 0}
             {...textInputProps}
           />
         );
@@ -278,6 +288,11 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
       ) : null}
       {inputElement(type)}
       {note ? note : null}
+      {validationErrors.map((validationError, index) => (
+        <small key={index} className="text-danger">
+          {validationError.error}
+        </small>
+      ))}
     </Form.Group>
   );
 };

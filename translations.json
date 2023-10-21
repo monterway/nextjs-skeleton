@@ -1,9 +1,12 @@
 {
   "en": {
+    "// NEXTJS SKELETON": "NEXTJS SKELETON",
     "invalidInput": "Invalid input",
     "unknownError": "Unknown error",
     "somethingUnexpectedHappened": "Something unexpected happened.",
-    "language_en": "English",
+    "// CONTENT IN PAGES": "CONTENT IN PAGES",
+    "// COMPONENTS": "COMPONENTS",
+    "// GENERAL": "GENERAL",
     "// DYNAMIC": "DYNAMIC",
     "form_test_field_test_label": "Test label",
     "form_test_field_test_placeholder": "Test placeholder",
