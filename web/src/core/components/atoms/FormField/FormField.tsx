@@ -1,7 +1,5 @@
 import {
   Button,
-  Col,
-  ColProps,
   Form,
   FormControlProps,
   FormGroupProps,
@@ -13,14 +11,7 @@ import TranslatorContext from '../../../contexts/TranslatorContext';
 import { FormDataType } from '../../../types/FormDataType';
 import FormRange from 'react-bootstrap/FormRange';
 
-export type FormFieldType =
-  | 'text'
-  | 'textarea'
-  | 'select'
-  | 'select-radio'
-  | 'number'
-  | 'number-text'
-  | 'number-slider';
+export type FormFieldType = 'text' | 'textarea' | 'select' | 'select-radio' | 'number' | 'number-text' | 'number-slider';
 
 export interface FormFieldOption {
   id: string;
@@ -41,7 +32,6 @@ export interface FormFieldProps {
   hasLabel?: boolean;
   size?: 'sm' | 'lg';
   selectOptions?: FormFieldOption[];
-  colProps?: ColProps;
   formGroupProps?: FormGroupProps;
   labelProps?: FormLabelProps;
   textInputProps?: FormControlProps;
@@ -66,9 +56,6 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     hasLabel = true,
     size = undefined,
     selectOptions = [],
-    colProps = {
-      xs: 12
-    },
     labelProps = {},
     textInputProps = {},
     selectInputProps = {},
@@ -285,15 +272,13 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
   };
 
   return (
-    <Col key={id} {...colProps}>
-      <Form.Group controlId={id} {...formGroupProps}>
-        {hasLabel ? (
-          <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
-        ) : null}
-        {inputElement(type)}
-        {note ? note : null}
-      </Form.Group>
-    </Col>
+    <Form.Group controlId={id} {...formGroupProps}>
+      {hasLabel ? (
+        <Form.Label {...labelProps}>{label ? label : translator.translate(`${translationPath}_label`)}</Form.Label>
+      ) : null}
+      {inputElement(type)}
+      {note ? note : null}
+    </Form.Group>
   );
 };
 
