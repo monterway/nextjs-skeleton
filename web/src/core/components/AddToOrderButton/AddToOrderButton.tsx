@@ -1,7 +1,7 @@
-import {Button} from "react-bootstrap";
-import React from "react";
-import OrderHandlerContext from "../../contexts/OrderHandlerContext";
-import {ButtonProps} from "react-bootstrap/Button";
+import { Button } from 'react-bootstrap';
+import React from 'react';
+import OrderHandlerContext from '../../contexts/OrderHandlerContext';
+import { ButtonProps } from 'react-bootstrap/Button';
 
 export interface AddToOrderButtonProps {
   productId: string;
@@ -11,12 +11,7 @@ export interface AddToOrderButtonProps {
 }
 
 const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
-  const {
-    productId,
-    quantity,
-    children,
-    buttonProps = {},
-  } = props;
+  const { productId, quantity, children, buttonProps = {} } = props;
   const orderHandler = React.useContext(OrderHandlerContext);
 
   const addToOrder = () => {
@@ -24,20 +19,17 @@ const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
       order.productOrders.push({
         id: new Date().getTime().toString(),
         productId,
-        quantity,
+        quantity
       });
       return order;
     });
   };
 
   return (
-    <Button
-      onClick={addToOrder}
-      {...buttonProps}
-    >
-      { children }
+    <Button onClick={addToOrder} {...buttonProps}>
+      {children}
     </Button>
   );
-}
+};
 
 export default AddToOrderButton;
