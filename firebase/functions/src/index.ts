@@ -5,8 +5,9 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import RequestHandler from "./core/modules/RequestHandler/RequestHandler";
 import AuthModule from "./core/modules/Auth/Auth";
-import AuthRoutes from "./core/routes/Auth/Auth";
-import DataRoutes from "./core/routes/Data/Data";
+import AuthRoutes from "./core/routes/Auth";
+import DataRoutes from "./core/routes/Data";
+import QuestionRoutes from "./core/routes/Question";
 import AppRoutes from "./app/routes/App";
 
 admin.initializeApp();
@@ -22,6 +23,7 @@ app.use(AuthModule().setUserInRequest);
 
 app.use("/auth", AuthRoutes);
 app.use("/data", DataRoutes);
+app.use("/question", QuestionRoutes);
 app.use("/app", AppRoutes);
 
 exports.app = functions.region("europe-west3").https.onRequest(app);

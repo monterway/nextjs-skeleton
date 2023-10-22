@@ -1,5 +1,5 @@
 import React from 'react';
-import InfoModalContext from '../../../contexts/InfoModalContext';
+import InfoModalContext from '../../contexts/InfoModalContext';
 
 const InfoModal = (): JSX.Element | null => {
   const infoModal = React.useContext(InfoModalContext);

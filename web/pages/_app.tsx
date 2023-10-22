@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 import React, { Fragment } from 'react';
-import PageLoader from '../src/core/components/atoms/PageLoader/PageLoader';
+import PageLoader from '../src/core/components/PageLoader/PageLoader';
 import useTranslator, { TranslationsType } from '../src/core/hooks/useTranslator';
 import * as translationsData from '../../translations.json';
 import TranslatorContext from '../src/core/contexts/TranslatorContext';
@@ -24,7 +24,7 @@ import { GetDataResponseType } from '../../general/types/GetDataResponseType';
 import DataContext from '../src/core/contexts/DataContext';
 import { InfoModalType } from '../src/core/types/InfoModalType';
 import InfoModalContext from 'core/contexts/InfoModalContext';
-import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
+import InfoModal from '../src/core/components/InfoModal/InfoModal';
 import Script from 'next/script';
 import { ConfigType } from '../../general/types/ConfigType';
 import * as firebaseConfig from '../../firebase/config.json';

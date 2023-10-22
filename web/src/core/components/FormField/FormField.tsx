@@ -1,9 +1,9 @@
 import { Button, Form, FormControlProps, FormGroupProps, FormLabelProps, FormSelectProps } from 'react-bootstrap';
 import React, { Dispatch, SetStateAction } from 'react';
-import TranslatorContext from '../../../contexts/TranslatorContext';
-import { FormDataType } from '../../../types/FormDataType';
+import TranslatorContext from '../../contexts/TranslatorContext';
+import { FormDataType } from '../../types/FormDataType';
 import FormRange from 'react-bootstrap/FormRange';
-import { ValidationErrorType } from '../../../../../../general/types/ValidationErrorType';
+import { ValidationErrorType } from '../../../../../general/types/ValidationErrorType';
 
 export type FormFieldType =
   | 'text'
