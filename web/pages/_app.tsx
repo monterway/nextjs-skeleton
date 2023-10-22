@@ -60,10 +60,14 @@ const App = (props: AppProps) => {
   if (typeof localStorage !== 'undefined') {
     existingOrderJSON = localStorage.getItem('E_COMMERCE_ORDER');
   }
-  const [order, setOrder] = React.useState<OrderType>(existingOrderJSON !== null ? JSON.parse(existingOrderJSON) : {
-    id: new Date().getTime().toString(),
-    productOrders: []
-  });
+  const [order, setOrder] = React.useState<OrderType>(
+    existingOrderJSON !== null
+      ? JSON.parse(existingOrderJSON)
+      : {
+          id: new Date().getTime().toString(),
+          productOrders: []
+        }
+  );
 
   React.useEffect(() => {
     setIsAppLoaded(false);
