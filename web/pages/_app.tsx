@@ -56,18 +56,17 @@ const App = (props: AppProps) => {
     translationsData as unknown as TranslationsType
   );
   const [infoModal, setInfoModal] = React.useState<InfoModalType | null>(null);
-  let existingOrderJSON = null;
-  if (typeof localStorage !== 'undefined') {
-    existingOrderJSON = localStorage.getItem('E_COMMERCE_ORDER');
-  }
-  const [order, setOrder] = React.useState<OrderType>(
-    existingOrderJSON !== null
-      ? JSON.parse(existingOrderJSON)
-      : {
-          id: new Date().getTime().toString(),
-          productOrders: []
-        }
-  );
+  const [order, setOrder] = React.useState<OrderType>({
+    id: new Date().getTime().toString(),
+    productOrders: []
+  });
+
+  React.useEffect(() => {
+    const existingOrderJson = localStorage.getItem('E_COMMERCE_ORDER');
+    if (existingOrderJson !== null) {
+      setOrder(JSON.parse(existingOrderJson));
+    }
+  }, []);
 
   React.useEffect(() => {
     setIsAppLoaded(false);
