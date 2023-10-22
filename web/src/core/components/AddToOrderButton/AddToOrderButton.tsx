@@ -16,12 +16,13 @@ const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
 
   const addToOrder = () => {
     orderHandler.set((order) => {
-      order.productOrders.push({
+      const newOrder = { ...order };
+      newOrder.productOrders.push({
         id: new Date().getTime().toString(),
         productId,
         quantity
       });
-      return order;
+      return newOrder;
     });
   };
 
