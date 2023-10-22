@@ -1,9 +1,9 @@
 import * as express from "express";
-import ResponseHandler from "../../modules/ResponseHandler/ResponseHandler";
-import {GetDataRequestType} from "../../../../../../general/types/GetDataRequestType";
+import ResponseHandler from "../modules/ResponseHandler/ResponseHandler";
+import {GetDataRequestType} from "../../../../../general/types/GetDataRequestType";
 import * as admin from "firebase-admin";
-import {DocType} from "../../../../../../general/types/DocType";
-import {GetDataResponseType} from "../../../../../../general/types/GetDataResponseType";
+import {DocType} from "../../../../../general/types/DocType";
+import {GetDataResponseType} from "../../../../../general/types/GetDataResponseType";
 
 const Data = express.Router();
 

@@ -1,6 +1,6 @@
 import * as express from "express";
-import {UserType} from "../../../../../../general/types/UserType";
-import ResponseHandler from "../../modules/ResponseHandler/ResponseHandler";
+import {UserType} from "../../../../../general/types/UserType";
+import ResponseHandler from "../modules/ResponseHandler/ResponseHandler";
 
 const Auth = express.Router();
 
