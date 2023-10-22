@@ -16,13 +16,21 @@ const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
 
   const addToOrder = () => {
     orderHandler.set((order) => {
-      const newOrder = { ...order };
-      newOrder.productOrders.push({
-        id: new Date().getTime().toString(),
-        productId,
-        quantity
-      });
-      return newOrder;
+      const indexOfExistingProductOrder = order.productOrders.findIndex((productOrder) => productOrder.productId === productId);
+      if (indexOfExistingProductOrder < 0) {
+        const newOrder = { ...order };
+        newOrder.productOrders.push({
+          id: new Date().getTime().toString(),
+          productId,
+          quantity
+        });
+        return newOrder;
+      }
+      else {
+        const newOrder = { ...order };
+        newOrder.productOrders[indexOfExistingProductOrder].quantity = newOrder.productOrders[indexOfExistingProductOrder].quantity + quantity;
+        return newOrder;
+      }
     });
   };
 
