@@ -16,7 +16,9 @@ const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
 
   const addToOrder = () => {
     orderHandler.set((order) => {
-      const indexOfExistingProductOrder = order.productOrders.findIndex((productOrder) => productOrder.productId === productId);
+      const indexOfExistingProductOrder = order.productOrders.findIndex(
+        (productOrder) => productOrder.productId === productId
+      );
       if (indexOfExistingProductOrder < 0) {
         const newOrder = { ...order };
         newOrder.productOrders.push({
@@ -25,10 +27,10 @@ const AddToOrderButton = (props: AddToOrderButtonProps): JSX.Element | null => {
           quantity
         });
         return newOrder;
-      }
-      else {
+      } else {
         const newOrder = { ...order };
-        newOrder.productOrders[indexOfExistingProductOrder].quantity = newOrder.productOrders[indexOfExistingProductOrder].quantity + quantity;
+        newOrder.productOrders[indexOfExistingProductOrder].quantity =
+          newOrder.productOrders[indexOfExistingProductOrder].quantity + quantity;
         return newOrder;
       }
     });
