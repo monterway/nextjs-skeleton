@@ -28,6 +28,8 @@ import InfoModal from '../src/core/components/atoms/InfoModal/InfoModal';
 import Script from 'next/script';
 import { ConfigType } from '../../general/types/ConfigType';
 import * as firebaseConfig from '../../firebase/config.json';
+import { OrderType } from '../../general/types/OrderType';
+import OrderHandlerContext from 'core/contexts/OrderHandlerContext';
 
 const App = (props: AppProps) => {
   const config: ConfigType = {
@@ -54,6 +56,10 @@ const App = (props: AppProps) => {
     translationsData as unknown as TranslationsType
   );
   const [infoModal, setInfoModal] = React.useState<InfoModalType | null>(null);
+  const [order, setOrder] = React.useState<OrderType>({
+    id: new Date().getTime().toString(),
+    productOrders: []
+  });
 
   React.useEffect(() => {
     setIsAppLoaded(false);
@@ -122,6 +128,10 @@ const App = (props: AppProps) => {
       });
   }, [dataRequests, asPath]);
 
+  React.useEffect(() => {
+    localStorage.setItem('E_COMMERCE_ORDER', JSON.stringify(order));
+  }, [order]);
+
   const { isLoaded: isTranslatorLoaded, translator } = useTranslator({
     translations
   });
@@ -151,52 +161,59 @@ const App = (props: AppProps) => {
                     get: infoModal
                   }}
                 >
-                  <NextSeo
-                    title={translator.translate(`${pathname}_title`)}
-                    description={translator.translate(`${pathname}_description`)}
-                    canonical={typeof window !== 'undefined' ? window.location.href : undefined}
-                    languageAlternates={
-                      locales
-                        ? [
-                            {
-                              hrefLang: 'x-default',
-                              href: `${
-                                typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                              }${new URL(asPath, 'https://www.google.com').pathname}`
-                            },
-                            ...locales.map((locale) => ({
-                              hrefLang: locale,
-                              href: `${
-                                typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
-                              }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
-                            }))
-                          ]
-                        : []
-                    }
-                    themeColor={theme}
-                    noindex={false}
-                    nofollow={false}
-                  />
-                  <Script
-                    strategy="afterInteractive"
-                    src={`https://www.googletagmanager.com/gtag/js?id=${firebaseConfig.measurementId}`}
-                  />
-                  <Script
-                    id="google-analytics"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                      __html: `
+                  <OrderHandlerContext.Provider
+                    value={{
+                      set: setOrder,
+                      get: order
+                    }}
+                  >
+                    <NextSeo
+                      title={translator.translate(`${pathname}_title`)}
+                      description={translator.translate(`${pathname}_description`)}
+                      canonical={typeof window !== 'undefined' ? window.location.href : undefined}
+                      languageAlternates={
+                        locales
+                          ? [
+                              {
+                                hrefLang: 'x-default',
+                                href: `${
+                                  typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                                }${new URL(asPath, 'https://www.google.com').pathname}`
+                              },
+                              ...locales.map((locale) => ({
+                                hrefLang: locale,
+                                href: `${
+                                  typeof window !== 'undefined' && window.location.origin ? window.location.origin : ''
+                                }/${locale}${new URL(asPath, 'https://www.google.com').pathname}`
+                              }))
+                            ]
+                          : []
+                      }
+                      themeColor={theme}
+                      noindex={false}
+                      nofollow={false}
+                    />
+                    <Script
+                      strategy="afterInteractive"
+                      src={`https://www.googletagmanager.com/gtag/js?id=${firebaseConfig.measurementId}`}
+                    />
+                    <Script
+                      id="google-analytics"
+                      strategy="afterInteractive"
+                      dangerouslySetInnerHTML={{
+                        __html: `
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
             
                         gtag('config', '${firebaseConfig.measurementId}');
                       `
-                    }}
-                  />
-                  <PageLoader isVisible={isLoading} />
-                  <InfoModal />
-                  <Component />
+                      }}
+                    />
+                    <PageLoader isVisible={isLoading} />
+                    <InfoModal />
+                    <Component />
+                  </OrderHandlerContext.Provider>
                 </InfoModalContext.Provider>
               </UserContext.Provider>
             </TranslatorContext.Provider>
