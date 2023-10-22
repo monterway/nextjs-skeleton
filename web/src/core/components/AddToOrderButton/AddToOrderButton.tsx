@@ -6,7 +6,7 @@ import { ButtonProps } from 'react-bootstrap/Button';
 export interface AddToOrderButtonProps {
   productId: string;
   quantity: number;
-  children: string | JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[];
   buttonProps?: ButtonProps;
 }
 
