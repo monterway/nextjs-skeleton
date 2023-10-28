@@ -27,8 +27,8 @@ const InfoModal = (): JSX.Element | null => {
           {infoModal.get.description ? <p className="m-0 p-0 mt-3">{infoModal.get.description}</p> : null}
           {infoModal.get.list && infoModal.get.list.length ? (
             <ul className="info-modal__card-list m-0 p-0 mt-3">
-              {infoModal.get.list.map((item) => (
-                <li className="info-modal__card-list-item">
+              {infoModal.get.list.map((item, index) => (
+                <li key={index} className="info-modal__card-list-item">
                   <i className="bi bi-arrow-right"></i>
                   {item}
                 </li>

@@ -37,7 +37,7 @@ const ContactForm = (): JSX.Element | null => {
     Functions({
       locale: translator.locale
     })
-      .call('app/question/create', requestData)
+      .call('question/create', requestData)
       .then(() => {
         setIsFormLoading(false);
         infoModal.set({
