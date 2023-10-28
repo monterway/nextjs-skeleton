@@ -1,5 +1,7 @@
 import * as express from "express";
+// eslint-disable-next-line max-len
 import {QuestionCreateRequestType} from "../../../../../general/types/QuestionCreateRequestType";
+// eslint-disable-next-line max-len
 import {QuestionCreateResponseType} from "../../../../../general/types/QuestionCreateResponseType";
 import Validator from "../../core/modules/Validator/Validator";
 import ResponseHandler from "../../core/modules/ResponseHandler/ResponseHandler";
