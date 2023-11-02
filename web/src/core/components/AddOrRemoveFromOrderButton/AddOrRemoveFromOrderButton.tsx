@@ -74,11 +74,21 @@ const AddOrRemoveFromOrderButton = (props: AddOrRemoveFromOrderButtonProps): JSX
 
   return (
     <div className="add-or-remove-from-order-button">
-      <Button onClick={addProduct} variant="success" {...addButtonProps}>
+      <Button
+        className="add-or-remove-from-order-button__button"
+        onClick={addProduct}
+        variant="success"
+        {...addButtonProps}
+      >
         {addButtonChildren}
       </Button>
       {isRemoveAvailable ? (
-        <Button onClick={removeProduct} variant="danger" {...removeButtonProps}>
+        <Button
+          className="add-or-remove-from-order-button__button"
+          onClick={removeProduct}
+          variant="danger"
+          {...removeButtonProps}
+        >
           {removeButtonChildren}
         </Button>
       ) : null}

@@ -1,4 +1,17 @@
 .add-or-remove-from-order-button {
   display: flex;
   gap: 10px;
+  flex-direction: column;
+
+  @include media-breakpoint-up(xxl) {
+    flex-direction: row;
+  }
+
+  &__button {
+    width: 100%;
+
+    @include media-breakpoint-up(xxl) {
+      width: calc((100% - 10px) / 2);
+    }
+  }
 }
