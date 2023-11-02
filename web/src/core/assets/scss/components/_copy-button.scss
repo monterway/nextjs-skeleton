@@ -1,0 +1,17 @@
+.copy-button {
+  &__content {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+
+  &__message {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+}

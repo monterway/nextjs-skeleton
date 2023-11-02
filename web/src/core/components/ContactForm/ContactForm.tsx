@@ -135,7 +135,7 @@ const ContactForm = (): JSX.Element | null => {
         <Col xs={12} className="text-center">
           <div className="p-1">
             <Button size="lg" onClick={submit} disabled={isFormLoading}>
-              {translator.translate('contact-form_form_submit')}
+              <span>{translator.translate('contact-form_form_submit')}</span>
               <i className="bi bi-arrow-right" />
             </Button>
           </div>
