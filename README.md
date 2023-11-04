@@ -113,6 +113,24 @@
 74. Click `Add domain`
 75. Paste the copied domain from step 71
 76. Click `Add`
+77. Set up the mailing configuration inside `firebase/functions/src/app/config/MailingConfig.ts`
+    - `Gmail`:
+      - Go to `https://myaccount.google.com/`
+      - Click `Security`
+      - Click `2-Step Verification`
+      - If not enabled, enable 2-Step Verification
+      - Click on `App passwords`
+      - Under `App name` write `Cloud functions mailing`
+      - Click `Create`
+      - Copy the password
+      - Go to `firebase/functions/src/app/config/MailingConfig.ts`
+      - Paste the password inside `auth.pass`
+      - In `host` write `smtp.gmail.com`
+      - In `port` write `465`
+      - In `secure` write `true`
+      - In `auth.user` write the Gmail email address; Example: `example@gmail.com`
+      - In `fromName` write your first name and last name; Example: `John Doe`
+      - In `fromEmail` write the Gmail email address; Example: `example@gmail.com`
 
 ## Fetch skeleton
 1. Define skeleton repository: `git remote add template git@github.com:monterway/nextjs-skeleton.git`
