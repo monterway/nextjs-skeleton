@@ -142,7 +142,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
           <div>
             {selectOptions.map((selectOption) => (
               <Form.Check
-                key={selectOption.id}
+                key={`${translationPath}_${selectOption.id}`}
                 type="radio"
                 label={
                   selectOption.title
