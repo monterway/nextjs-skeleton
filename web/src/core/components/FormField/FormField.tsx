@@ -41,6 +41,7 @@ export interface FormFieldProps {
   placeholder?: string;
   note?: JSX.Element;
   validationErrors?: ValidationErrorType[];
+  onChange?: (newValue: string | number) => void;
 }
 
 const FormField = (props: FormFieldProps): JSX.Element | null => {
@@ -65,7 +66,8 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
     label = null,
     placeholder = null,
     note = null,
-    validationErrors = []
+    validationErrors = [],
+    onChange = () => {}
   } = props;
   const translator = React.useContext(TranslatorContext);
 
@@ -96,6 +98,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
         ...data,
         [id]: roundedNewNumber
       }));
+      onChange(roundedNewNumber);
     }
   };
 
@@ -110,6 +113,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
         ...data,
         [id]: roundedNewNumber
       }));
+      onChange(roundedNewNumber);
     }
   };
 
@@ -119,12 +123,13 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
         return (
           <Form.Select
             size={size}
-            onChange={(event) =>
+            onChange={(event) => {
               setInFormData((data) => ({
                 ...data,
                 [id]: event.target.value
-              }))
-            }
+              }));
+              onChange(event.target.value);
+            }}
             isInvalid={validationErrors.length > 0}
             {...selectInputProps}
           >
@@ -154,6 +159,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                     ...data,
                     [id]: selectOption.id
                   }));
+                  onChange(selectOption.id);
                 }}
                 checked={formData[id] === selectOption.id}
                 id={selectOption.id}
@@ -190,6 +196,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                     ...data,
                     [id]: parsedNewValue
                   }));
+                  onChange(parsedNewValue);
                 }
               } else {
                 if (typeof numberTypeConfig.min !== 'undefined') {
@@ -198,6 +205,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                       ...data,
                       [id]: parsedNewValue
                     }));
+                    onChange(parsedNewValue);
                   }
                 } else if (typeof numberTypeConfig.max !== 'undefined') {
                   if (parsedNewValue <= numberTypeConfig.max) {
@@ -205,6 +213,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                       ...data,
                       [id]: parsedNewValue
                     }));
+                    onChange(parsedNewValue);
                   }
                 }
               }
@@ -228,6 +237,7 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
                     ...data,
                     [id]: parseFloat(event.target.value)
                   }));
+                  onChange(parseFloat(event.target.value));
                 }}
                 min={numberTypeConfig?.min}
                 max={numberTypeConfig?.max}
@@ -251,12 +261,13 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
             placeholder={placeholder ? placeholder : translator.translate(`${translationPath}_placeholder`)}
             size={size}
             value={formData[id]}
-            onChange={(event) =>
+            onChange={(event) => {
               setInFormData((data) => ({
                 ...data,
                 [id]: event.target.value
-              }))
-            }
+              }));
+              onChange(parseFloat(event.target.value));
+            }}
             isInvalid={validationErrors.length > 0}
             {...textInputProps}
           />
@@ -268,12 +279,13 @@ const FormField = (props: FormFieldProps): JSX.Element | null => {
             placeholder={placeholder ? placeholder : translator.translate(`${translationPath}_placeholder`)}
             size={size}
             value={formData[id]}
-            onChange={(event) =>
+            onChange={(event) => {
               setInFormData((data) => ({
                 ...data,
                 [id]: event.target.value
-              }))
-            }
+              }));
+              onChange(parseFloat(event.target.value));
+            }}
             isInvalid={validationErrors.length > 0}
             {...textInputProps}
           />
