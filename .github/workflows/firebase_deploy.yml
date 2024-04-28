@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@master
+        uses: w9jds/firebase-action@v12.9.0
       - name: 'Setup Node.js 16'
         uses: actions/setup-node@v3
         with:
@@ -22,7 +22,7 @@ jobs:
       - name: 'Install dependencies'
         run: 'cd ./firebase/functions && npm i'
       - name: 'Deploy functions'
-        uses: w9jds/firebase-action@master
+        uses: w9jds/firebase-action@v12.9.0
         with:
           args: 'deploy --only functions'
         env:
